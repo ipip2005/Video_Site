@@ -2,6 +2,14 @@ Video_Site
 ==========
 Apache Virtual Host Config:
 =================================================================
+<Directory />
+
+    Order deny,allow
+
+    Allow from all
+
+</Directory>
+=================================================================
 <Directory "F:\GitHub\Video_Site\public"> 
  Options Indexes FollowSymLinks Includes ExecCGI
  AllowOverride All
