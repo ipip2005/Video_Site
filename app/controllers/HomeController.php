@@ -14,10 +14,29 @@ class HomeController extends BaseController {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
-
-	public function showWelcome()
-	{
-		return View::make('hello');
-	}
-
+    public function __construct() {
+        // updated: prevents re-login.
+        $this->beforeFilter ( 'guest', [
+            'only' => [
+                'getLogin'
+            ]
+        ] );
+        $this->beforeFilter ( 'auth', [
+            'only' => [
+                'getLogout'
+            ]
+        ] );
+    }
+    public function getIndex(){
+        $this->layout->title="FduVideoSite";
+        $this->layout->main=View::make('home');
+    }
+    public function getLogin(){
+        $this->layout->title="Login";
+        $this->layout->main=View::make('login');
+    }
+    public function getRegister(){
+        $this->layout->title="Register";
+        $this->layout->main=View::make('login');
+    }
 }
