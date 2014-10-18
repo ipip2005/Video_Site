@@ -19,17 +19,41 @@ BODY {
   ::-webkit-scrollbar-thumb:active { background-color: #333 }/* Scroll click & drag color */
 .master-nav{
 	position:fixed;
-	height:30px;
+	height:45px;
 	width:100%;
-	background-color:black;
-}
-.master-nav-content{
-	width:980px;
+	background-color:#222;
 	
 }
-.master-nav-content *{
-	float:left;
+.master-nav-content{
+	text-align:center;
+	width:980px;
+	margin-left:auto;
+	margin-right:auto;
+	line-height:45px;
+}
+.master-nav-content a{
+	color:#ddd;
+}
+.master-nav-content a:hover{
+	color:#fff;
+	text-decoration:none;
+}
+.search-content{
+	margin-top:5px;
 }
 .header-blank{
-	padding-top:30px;
+	padding-top:75px;
+}
+.footer-blank{
+	padding-bottom:20px;
+}
+.logreg *{
+	display:inline;
+}
+.up-button{
+	width:120px;
+	height:30px;
+	margin-top:8px;
+	line-height:25px;
+	border:0;
 }
