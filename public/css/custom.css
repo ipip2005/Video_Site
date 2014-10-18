@@ -8,6 +8,9 @@ BODY {
  SCROLLBAR-DARKSHADOW-COLOR: #48486c; 
  SCROLLBAR-BASE-COLOR: #fcfcfc 
 }
+html, body{
+	height:100%;
+}
   ::-webkit-scrollbar { width: 10px; }/* Track & scroll thickness */
 
   ::-webkit-scrollbar-track { background-color:#aea; }/* Track color */
@@ -41,11 +44,13 @@ BODY {
 .search-content{
 	margin-top:5px;
 }
-.header-blank{
-	padding-top:75px;
-}
-.footer-blank{
-	padding-bottom:20px;
+footer{
+	height:60px;
+	background:#222;
+	color:#ddd;
+	width:100%;
+	margin-bottom:0;
+	margin-top:-60px;
 }
 .logreg *{
 	display:inline;
@@ -58,7 +63,10 @@ BODY {
 	border:0;
 }
 .main-wrap{
+	padding-top:75px;
+	padding-bottom:60px;
 	margin-left:auto;
 	margin-right:auto;
+	min-height:100%;
 	width:1180px;
 }

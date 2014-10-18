@@ -41,13 +41,11 @@ HTML::style('css/font-awesome.css') }}
 			</div>
 		</nav>
 	</header>
-	<div class="header-blank"></div>
 	<div class="main-wrap">
 		<div class="row">
 		   {{$main}}
 		</div>
 	</div>
-	<div class="footer-blank"></div>
 	<footer class="text-center"> This_is_Footer </footer>
 	{{ HTML::script('./js/custom.js') }}
 </body>
