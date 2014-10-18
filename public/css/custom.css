@@ -58,5 +58,7 @@ BODY {
 	border:0;
 }
 .main-wrap{
+	margin-left:auto;
+	margin-right:auto;
 	width:1180px;
 }
