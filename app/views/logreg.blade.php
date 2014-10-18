@@ -79,8 +79,23 @@
 		</div>
 	</div>
 </div>-->
-<a class="btn" data-toggle="popover" data-placement="bottom" data-content="
-<br/><div class='input-group'> <span class='input-group-addon'>用户名</span> <input type='text' class='form-control' placeholder='Username'> </div><br/>
-<div class='input-group'> <span class='input-group-addon'>密&nbsp&nbsp&nbsp&nbsp码</span> <input type='password' class='form-control' placeholder='Password'> </div>
-<div class='text-center'><br/><br/><button type='button' class='btn btn-primary'>登录</button></div>" title="请登录">登录</a>
+<a class="btn" data-toggle="popover"  title="请登录" data-placement="bottom"
+	data-content="
+        <br/>
+        <div class='input-group'>
+		<span class='input-group-addon'>用户名</span> <input type='text'
+			class='form-control' placeholder='Username'>
+	</div>
+	<br />
+	<div class='input-group'>
+		<span class='input-group-addon'>密&nbsp&nbsp&nbsp&nbsp码</span> <input
+			type='password' class='form-control' placeholder='Password'>
+	</div>
+	<div class='text-center'>
+		<br />
+		<br />
+		<button type='button' class='btn btn-primary'>登录</button>
+	</div>
+	">
+	登录</a>
 <script>$(function(){$("[data-toggle='popover']").popover({html:true}); })</script>
