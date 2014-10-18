@@ -14,16 +14,16 @@
 </head>
 <body>
     <header>
-        <nav class="nav text-center">
-            <div class="nav-content">
-                <div class="nav-item logo">
+        <nav class="master-nav text-center">
+            <div class="master-nav-content">
+                <div class="master-nav-item logo">
                    <p>LOGO</p>
                 </div>
-                <div class="nav-item search-box">
+                <div class="master-nav-item search-box">
                 </div>
-                <div class="nav-item">
+                <div class="master-nav-item">
                 </div>
-                <div class="nav-item logreg">
+                <div class="master-nav-item logreg">
                 @if(Auth::check())
                 @else
                     <a href="/logreg#login">登陆</a>
