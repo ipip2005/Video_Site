@@ -17,7 +17,7 @@
         <nav class="nav text-center">
             <div class="nav-content">
                 <div class="nav-item logo">
-                    
+                   <p>LOGO</p>
                 </div>
                 <div class="nav-item search-box">
                 </div>

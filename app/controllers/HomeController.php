@@ -32,12 +32,8 @@ class HomeController extends BaseController {
         $this->layout->title="FduVideoSite";
         $this->layout->main=View::make('home');
     }
-    public function getLogin(){
-        $this->layout->title="Login";
-        $this->layout->main=View::make('logreg');
-    }
-    public function getRegister(){
-        $this->layout->title="Register";
+    public function getLogreg(){
+        $this->layout->title="Login/Register";
         $this->layout->main=View::make('logreg');
     }
 }
