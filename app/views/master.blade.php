@@ -23,10 +23,12 @@
                 </div>
                 <div class="nav-item">
                 </div>
-                <div class="nav-item login">
+                <div class="nav-item logreg">
                 @if(Auth::check())
                 @else
-                    
+                    <a href="/logreg#login">登陆</a>
+                    <p>/</p>
+                    <a href="/logreg#register">注册</a>
                 @endif
                 </div>
             </div>

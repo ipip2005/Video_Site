@@ -18,7 +18,8 @@ class HomeController extends BaseController {
         // updated: prevents re-login.
         $this->beforeFilter ( 'guest', [
             'only' => [
-                'getLogin'
+                'getLogin',
+                'getRegister'
             ]
         ] );
         $this->beforeFilter ( 'auth', [
@@ -33,10 +34,10 @@ class HomeController extends BaseController {
     }
     public function getLogin(){
         $this->layout->title="Login";
-        $this->layout->main=View::make('login');
+        $this->layout->main=View::make('logreg');
     }
     public function getRegister(){
         $this->layout->title="Register";
-        $this->layout->main=View::make('login');
+        $this->layout->main=View::make('logreg');
     }
 }

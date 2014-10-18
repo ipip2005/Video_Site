@@ -27,6 +27,9 @@ BODY {
 	width:980px;
 	
 }
+.nav-content *{
+	float:left;
+}
 .header-blank{
 	padding-top:30px;
 }
