@@ -46,7 +46,7 @@ HTML::style('css/font-awesome.css') }}
 		   {{$main}}
 		</div>
 	</div>
-	<footer class="text-center"> This_is_Footer </footer>
+	<footer class="footer text-center"> This_is_Footer </footer>
 	{{ HTML::script('./js/custom.js') }}
 </body>
 </html>
