@@ -28,9 +28,10 @@ class UserController extends BaseController {
     public function getIhome(){
         $user = Auth::user();
         $name = $user->nickname;
+        $active = 'ihome';
         if (empty($name)) $name = $user->username;
         $this->layout->title="My Home";
-        $this->layout->user_nav=View::make('user/index');
+        $this->layout->user_nav=View::make('user/index')->with(compact('active'));
         $this->layout->main=View::make('user/ihome')->with(compact('user','name'));
     }
 }

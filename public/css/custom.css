@@ -112,6 +112,7 @@ html, body{
 .user-nav .container{
 	width:1080px;
 }
+
 .user-nav a{
 	font-size:20px;
 	color:#555;
@@ -121,6 +122,11 @@ html, body{
 	color:#17a689;
 	text-decoration:none;
 }
+.user-nav li{
+	padding:0;
+}
 .user-nav li.active a{
+	font-weight:600;
+	color:#17a689;
 	border-bottom:2px solid #37afe4;
 }
