@@ -34,4 +34,13 @@ class UserController extends BaseController {
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
         $this->layout->main=View::make('user/ihome')->with(compact('user','name'));
     }
+    public function getUpload(){
+        $user = Auth::user();
+        $name = $user->nickname;
+        $active = 'ihome';
+        if (empty($name)) $name = $user->username;
+        $this->layout->title="My Home";
+        $this->layout->user_nav=View::make('user/index')->with(compact('active'));
+        $this->layout->main=View::make('user/upload')->with(compact('user','name'));
+    }
 }
