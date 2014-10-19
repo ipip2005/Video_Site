@@ -37,7 +37,7 @@ HTML::style('css/font-awesome.css') }}
 						@else 
 						<a href="javascript:void(0)" data-toggle="popover" title="请登录" data-placement="bottom"
 							id="login" data-trigger="click" data-content="
-						<div id='pop-content'>
+						<div class='pop-content' id='p-login'>
 						    <div class='input-group'>
 								<span class='input-group-addon'>账号</span> <input type='text'
 									class='form-control catch-focus' placeholder='Username'>
@@ -56,7 +56,26 @@ HTML::style('css/font-awesome.css') }}
 					   </a>
 
 					<b>|</b>
-					<a href="/logreg#register">注册</a> @endif
+					<a href="javascript:void(0)" data-toggle="popover" title="请注册" data-placement="bottom"
+							id="register" data-trigger="click" data-content="
+						<div class='pop-content' id='p-register'>
+						    <div class='input-group'>
+								<span class='input-group-addon'>账号</span> <input type='text'
+									class='form-control catch-focus' placeholder='Username'>
+							</div>
+							<div class='input-group margin-top-10'>
+								<span class='input-group-addon'>密码</span> <input
+									type='password' class='form-control' placeholder='Password'>
+							</div>
+							<div class='text-center'>
+								<button type='button' class='btn btn-primary'>注册</button>
+							</div>
+					
+					   </div>
+					       ">
+					       <span>注册</span>
+					   </a>
+					@endif
 					
 				</div>
 				<div class="master-nav-item col-xs-2">
@@ -70,16 +89,23 @@ HTML::style('css/font-awesome.css') }}
 	<script>
 		$(function () {
 			  $("#login").popover({html:true});
+			  $("#register").popover({html:true});
 			  $("[data-toggle='popover']").click(function(){
 				  if ($(".popover").length>0){
 					  $(".popover .catch-focus").focus();
-					  $(document).click(function(e){
+					  $(document).unbind('click').click(function(e){
 						  e = window.event || e;
 						  obj = $(e.srcElement || e.target);
-						  if (!$(obj).is(".popover, .popover *") && !$(obj).is("#login, #login *")){
-					          $("[data-toggle='popover'").popover("hide");
-					          $(document).unbind("click");
-						  }
+						  var click_where=0;
+						  if ($(obj).is("#login, #login *")) click_where=1;
+						  if ($(obj).is("#register, #register *")) click_where=2;
+			            	  if ((!$(obj).is(".popover, .popover *")&&click_where==0)){
+			            		   $("[data-toggle='popover'").popover("hide");
+			            		   $(document).unbind("click");
+			            		   
+			            	  } 
+			            	  if (click_where==1) $("#register").popover("hide"); 
+		            		   if (click_where==2) $("#login").popover("hide");
 					  });
 				  } else $(document).unbind("click");
 			  });
