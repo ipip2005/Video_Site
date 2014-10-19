@@ -13,9 +13,9 @@ class CreateUrelationTable extends Migration {
 	public function up()
 	{
 		Schema::create('urelation', function (Blueprint $table) {
-			$table->string('host');
-			$table->string('friend');
-			$table->string('group');
+			$table->unsignedInteger('host');
+			$table->unsignedInteger('friend');
+			$table->unsignedInteger('group');
 			$table->timestamps();
 		});
 	}

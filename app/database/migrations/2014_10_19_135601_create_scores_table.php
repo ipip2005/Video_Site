@@ -13,9 +13,9 @@ class CreateScoresTable extends Migration {
 	public function up()
 	{
 		Schema::create('scores', function (Blueprint $table) {
-			$table->string('uid');
-			$table->string('vid');
-			$table->string('score');
+			$table->unsignedInteger('uid');
+			$table->unsignedInteger('vid');
+			$table->unsignedInteger('score');
 			$table->timestamps();
 		});
 	}

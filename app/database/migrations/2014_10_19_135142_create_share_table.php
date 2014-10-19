@@ -13,9 +13,9 @@ class CreateShareTable extends Migration {
 	public function up()
 	{
 		Schema::create('share', function (Blueprint $table) {
-			$table->string('uid');
-			$table->string('vid');
-			$table->string('gid');
+			$table->unsignedInteger('uid');
+			$table->unsignedInteger('vid');
+			$table->unsignedInteger('gid');
 			$table->timestamps();
 		});
 	}
