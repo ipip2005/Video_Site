@@ -38,7 +38,7 @@ class HomeController extends BaseController {
     }
     public function getVideo(){
         $this->layout->title="video";//video_name;
-        $this->layout->main=View::make('video.blade.php');
+        $this->layout->main=View::make('video');
     }
     public function getLogout(){
         Auth::Logout();
