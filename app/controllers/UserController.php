@@ -14,6 +14,10 @@ class UserController extends BaseController {
      |	Route::get('/', 'HomeController@showWelcome');
      |
      */
+    public function __construct() {
+        // updated: prevents re-login.
+        $this->beforeFilter ( 'auth' );
+    }
     public function getIhome(){
         $this->layout->title="My Home";
         $this->layout->main=View::make('user/ihome');

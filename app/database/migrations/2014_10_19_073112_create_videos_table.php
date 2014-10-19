@@ -18,6 +18,7 @@ class CreateVideosTable extends Migration {
 	        $table->string('path');
 	        $table->string('name');
 	        $table->string('introduction');
+	        $table->unsignedInteger('user_id');
 	        $table->unsignedInteger('view_count');
 	        $table->unsignedInteger('comment_count');
 	        $table->unsignedInteger('score');

@@ -32,7 +32,6 @@ groupId, groupName
 groupId: 组id，系统分配
 groupName: 组名
 
-
 mainTable
 uId, vId, groupId,  shareTime
 uId: 用户id

@@ -16,7 +16,7 @@ Route::post('/login', array('before' => 'guest', function(){
         'password' => Input::get('password')
     ];
     if (Auth::attempt($credentials))
-        return Redirect::json(array('response'=>'ok'));else
+        return Response::json(array('response'=>'ok'));else
             return Response::json(array('response' => 'Unauthorized'));
 }));
 Route::controller('/user', 'UserController');

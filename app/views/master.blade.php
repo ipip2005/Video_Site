@@ -21,7 +21,7 @@
 						<!-- logo -->
 						<a href="/">LOGO</a>
 					</div>
-					<div class="master-nav-item search-box col-xs-7">
+					<div class="master-nav-item search-box col-xs-6">
 						<!-- Search -->
 						<div class="input-group">
 							<input type="text" class="form-control search-content"
@@ -34,8 +34,21 @@
 						</div>
 					</div>
 					
-					<div class="master-nav-item logreg col-xs-2">
+					<div class="master-nav-item logreg col-xs-3">
 						@if(Auth::check()) 
+						<?php 
+						  $name = Auth::user()->nickname;
+						  if (mb_strlen($name)==0) $name=Auth::user()->username;
+						?>
+						<a href="/user/ihome" data-toggle="popover" data-placement="bottom" id="ihome"
+							data-trigger="hover" data-content="<?php echo$name?>"><span>
+						<i class="icon-user icon-x"></i>
+						<?php
+						  if (mb_strlen($name)>=12) $name = mb_substr($name, 0, 9, 'utf-8')."...";
+						  echo $name; 
+						?></span></a>
+						<b>|</b>
+						<a href="/logout">退出</a>
 						@else 
 						<a href="javascript:void(0)" data-toggle="popover" title="请登录" data-placement="bottom"
 							id="login" data-trigger="click" data-content="
@@ -98,8 +111,41 @@
 			</div>
 		</nav>
 	</header>
+	
+	@if(Session::has("needlogin"))
+    <script>
+		$(function () {
+			  function hideot(e){
+				  e = window.event || e;
+				  obj = $(e.srcElement || e.target);
+				  var click_where=0;
+				  if ($(obj).is("#login, #login *")) click_where=1;
+				  if ($(obj).is("#register, #register *")) click_where=2;
+	            	  if ((!$(obj).is(".popover, .popover *")&&click_where==0)){
+	            		   $("[data-toggle='popover'").popover("hide");
+	            		   $(document).unbind("click");
+	            		   
+	            	  } 
+	            	  if (click_where==1) $("#register").popover("hide"); 
+            		   if (click_where==2) $("#login").popover("hide");
+			  }
+			  $("#ihome").popover({html:false});
+			  $("#login").popover({html:true});
+			  $("#login").popover("show");
+			  $(document).click(function(e){hideot(e)});
+			  $("#register").popover({html:true});
+			  $("[data-toggle='popover']").click(function(){
+				  if ($(".popover").length>0){
+					  $(".popover .catch-focus").focus();
+					  $(document).unbind('click').click(function(e){hideot(e)});
+				  } else $(document).unbind("click");
+			  });
+		});
+	</script>
+	@else
 	<script>
 		$(function () {
+			  $("#ihome").popover({html:false});
 			  $("#login").popover({html:true});
 			  $("#register").popover({html:true});
 			  $("[data-toggle='popover']").click(function(){
@@ -123,6 +169,7 @@
 			  });
 		});
 	</script>
+	@endif
 	<div class="main-footer-wrap">
 	   <div class="main-wrap">
 		  <div class="container">{{$main}}</div>

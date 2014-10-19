@@ -80,7 +80,12 @@ html, body{
 .margin-top-10{
 	margin-top:10px;
 }
-.popover{
+.margin-tb-10{
+	margin-top:10px;
+	margin-bottom:10px;
+	padding:2px;
+}
+#login+.popover,#register+.popover{
 	width:414px;
 }
 .divider{
@@ -91,4 +96,11 @@ html, body{
 	margin-top:20px;
 	margin-bottom:10px;
 	background-color:#aaddcc;
+}
+.photo{
+	width:100%;
+	height:auto;
+}
+.line-lg{
+	line-height:40px;
 }

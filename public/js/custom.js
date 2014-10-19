@@ -7,7 +7,9 @@ function login(){
 		success:function(response){
 			var res = response.response;
 			if (res=="ok")history.go(0); else{
-				$("#error-message").show(500);
+				$("#error-message").show(500, function(){
+					$("#error-message").delay(3000).hide(500);
+				});
 			}
 		},
 	});

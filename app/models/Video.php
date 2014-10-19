@@ -1,6 +1,6 @@
 <?php
 
-class Article extends Eloquent
+class Video extends Eloquent
 {
 
     public function comments()
