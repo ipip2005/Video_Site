@@ -1,0 +1,64 @@
+userTable
+uId, username, nickName, password, email, photoPath, introduction, privilege, isAdmin
+uId: 用户id
+username: 用户名
+nickName: 昵称
+password: 密码
+email: email
+photoPath: 头像路径
+introduction: 个人简介
+privilege: 权限，可能被管理员禁言，禁止登陆，禁止分享etc。
+isAdmin: 是否是管理员
+
+
+videoTable
+vId, videoPath, videoHostId, videoName, videoIntroduction, score, putTime, status\
+vId: 视频id，系统分配
+videoPath: 视频路径
+videoHostId: 视频创建者id
+videoName: 视频名
+videoIntroduction: 视频简介
+score: 视频评分
+putTime: 创建时间
+status: 上传成功，上传中，断点
+
+
+
+groupTable
+groupId, groupName
+groupId: 组id，系统分配
+groupName: 组名
+
+
+mainTable
+uId, vId, groupId,  shareTime
+uId: 用户id
+vId: 视频id
+groupId: 可见组id
+shareTime: 分享时间
+
+
+
+userRelationTable
+hostId, friendId, groupId
+hostId: 用户id
+friendId: 朋友id
+groupId: 被分到的组
+
+
+
+commentTable
+uId, toUserId, vId, comment, commentTime
+uId: 用户id
+toUserId: 被评论用户id，为0表示对视频评论
+vId: 被评论视频id
+comment: 评论
+commentTime: 评论时间
+
+
+
+scoreTable
+uId, vId, score
+uId: 打分用户id
+vId: 被打分视频id
+score: 打分分数，需要被同步到videoTable中
