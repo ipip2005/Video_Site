@@ -11,9 +11,6 @@ BODY {
 html, body{
 	height:100%;
 }
-header{
-	z-index:1280;
-}
   ::-webkit-scrollbar { width: 10px; }/* Track & scroll thickness */
 
   ::-webkit-scrollbar-track { background-color:#aea; }/* Track color */
@@ -24,6 +21,7 @@ header{
 
   ::-webkit-scrollbar-thumb:active { background-color: #333 }/* Scroll click & drag color */
 .master-nav{
+	z-index:1024;
 	position:fixed;
 	height:45px;
 	width:100%;
