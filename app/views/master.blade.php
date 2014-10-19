@@ -4,9 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 @section('title')
-<title>{{{$title}}}</title> @show {{ HTML::style('css/bootstrap.css') }}
-{{ HTML::style('css/custom.css') }} {{
-HTML::style('css/font-awesome.css') }}
+<title>{{{$title}}}</title> 
+@show 
+{{ HTML::style('css/bootstrap.css') }}
+{{ HTML::style('css/custom.css') }} 
+{{ HTML::style('css/font-awesome.css') }}
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 {{ HTML::script('./js/bootstrap.min.js') }}
 </head>
@@ -119,10 +121,12 @@ HTML::style('css/font-awesome.css') }}
 			  });
 		});
 	</script>
-	<div class="main-wrap">
-		<div class="row">{{$main}}</div>
+	<div class="main-footer-wrap">
+	   <div class="main-wrap">
+		  <div class="container">{{$main}}</div>
+	   </div>
+	   <footer class="footer text-center"> This_is_Footer </footer>
 	</div>
-	<footer class="footer text-center"> This_is_Footer </footer>
 	{{ HTML::script('./js/custom.js') }}
 </body>
 </html>

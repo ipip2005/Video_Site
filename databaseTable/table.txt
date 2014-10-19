@@ -1,4 +1,4 @@
-userTable
+﻿userTable
 uId, username, nickName, password, email, photoPath, introduction, privilege, isAdmin
 uId: 用户id
 username: 用户名
@@ -12,7 +12,7 @@ isAdmin: 是否是管理员
 
 
 videoTable
-vId, videoPath, videoHostId, videoName, videoIntroduction, score, putTime, status\
+vId, videoPath, videoHostId, videoName, videoIntroduction, score, putTime, status
 vId: 视频id，系统分配
 videoPath: 视频路径
 videoHostId: 视频创建者id

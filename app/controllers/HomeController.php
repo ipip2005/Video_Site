@@ -36,4 +36,8 @@ class HomeController extends BaseController {
         $this->layout->title="Login/Register";
         $this->layout->main=View::make('logreg');
     }
+    public function getVideo(){
+        $this->layout->title="video";//video_name;
+        $this->layout->main=View::make('video.blade.php');
+    }
 }
