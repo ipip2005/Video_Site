@@ -40,7 +40,7 @@ HTML::style('css/font-awesome.css') }}
 						<div class='pop-content' id='p-login'>
 						    <div class='input-group'>
 								<span class='input-group-addon'>账号</span> <input type='text'
-									class='form-control catch-focus' placeholder='Username'>
+									class='form-control catch-focus' placeholder='Username or Mail-Address'>
 							</div>
 							<div class='input-group margin-top-10'>
 								<span class='input-group-addon'>密码</span> <input
@@ -66,6 +66,14 @@ HTML::style('css/font-awesome.css') }}
 							<div class='input-group margin-top-10'>
 								<span class='input-group-addon'>密码</span> <input
 									type='password' class='form-control' placeholder='Password'>
+							</div>
+							<div class='input-group margin-top-10'>
+								<span class='input-group-addon'>重复</span> <input
+									type='password' class='form-control' placeholder='Confirm Password'>
+							</div>
+							<div class='input-group margin-top-10'>
+								<span class='input-group-addon'>邮箱</span> <input
+									type='password' class='form-control' placeholder='Mail-Address'>
 							</div>
 							<div class='text-center'>
 								<button type='button' class='btn btn-primary'>注册</button>
