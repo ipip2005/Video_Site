@@ -65,7 +65,7 @@
 								<button type='button' class='btn btn-primary' onclick='login()'>登录</button>
 							</div>
 					        <div class='text-center' id='error-message' style='display:none'>
-					           <p class='text-danger'>用户不存在或密码错误</p>
+					           <p class='text-danger'></p>
 					        </div>
 					   </div>
 					       ">
@@ -78,24 +78,26 @@
 						<div class='pop-content' id='p-register'>
 						    <div class='input-group'>
 								<span class='input-group-addon'>账号</span> <input type='text'
-									class='form-control catch-focus' placeholder='Username'>
+									class='form-control catch-focus account' placeholder='Username'>
 							</div>
 							<div class='input-group margin-top-10'>
 								<span class='input-group-addon'>密码</span> <input
-									type='password' class='form-control' placeholder='Password'>
+									type='password' class='form-control password' placeholder='Password'>
 							</div>
 							<div class='input-group margin-top-10'>
 								<span class='input-group-addon'>重复</span> <input
-									type='password' class='form-control' placeholder='Confirm Password'>
+									type='password' class='form-control confirm-password' placeholder='Confirm Password'>
 							</div>
 							<div class='input-group margin-top-10'>
 								<span class='input-group-addon'>邮箱</span> <input
-									type='password' class='form-control' placeholder='Mail-Address'>
+									type='text' class='form-control mail-address' placeholder='Mail-Address'>
 							</div>
 							<div class='text-center'>
-								<button type='button' class='btn btn-primary'>注册</button>
+								<button type='button' class='btn btn-primary' onclick='register()'>注册</button>
 							</div>
-					
+					        <div class='text-center' id='error-message' style='display:none'>
+					           <p class='text-danger'></p>
+					        </div>
 					   </div>
 					       ">
 					       <span>注册</span>

@@ -33,9 +33,6 @@ class HomeController extends BaseController {
         $this->layout->title="FduVideoSite";
         $this->layout->main=View::make('home');
     }
-    public function postRegister(){
-        
-    }
     public function getVideo(){
         $this->layout->title="video";//video_name;
         $this->layout->main=View::make('video');

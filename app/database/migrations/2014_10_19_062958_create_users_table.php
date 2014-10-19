@@ -19,9 +19,9 @@ class CreateUsersTable extends Migration {
 			$table->string('nickname');
 			$table->string('password');
 			$table->string('email');
-			$table->string('photoPath');
+			$table->string('photoPath')->default('/usr/default/photo');
 			$table->string('introduction');
-			$table->unsignedInteger('privilege');
+			$table->unsignedInteger('privilege')->default(4);
 			$table->string('remember_token');
 			$table->timestamps();
 		});

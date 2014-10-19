@@ -13,8 +13,6 @@ class User2TableSeeder extends Seeder
             'nickName' => 'Tom Cruise',
             'password' => Hash::make('tom'),
         	'email' => 'tom@126.com',
-            'photoPath' => '/usr/1/photo',
-            'privilege' => '3',
             'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()'),
         );
@@ -27,8 +25,6 @@ class User2TableSeeder extends Seeder
             'nickName' => 'Jackie Chan',
             'password' => Hash::make('jack'),
         	'email' => 'jack@126.com',
-            'photoPath' => '/usr/1/photo',
-            'privilege' => '3',
             'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()'),
         );
@@ -41,8 +37,6 @@ class User2TableSeeder extends Seeder
             'nickName' => 'Mary Streep',
             'password' => Hash::make('mary'),
         	'email' => 'mary@126.com',
-            'photoPath' => '/usr/1/photo',
-            'privilege' => '3',
             'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()'),
         );
@@ -55,8 +49,6 @@ class User2TableSeeder extends Seeder
             'nickName' => 'Bill Cliton',
             'password' => Hash::make('bill'),
         	'email' => 'tom@126.com',
-            'photoPath' => '/usr/1/photo',
-            'privilege' => '3',
             'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()'),
         );
@@ -69,8 +61,6 @@ class User2TableSeeder extends Seeder
             'nickName' => 'Andy Wood',
             'password' => Hash::make('andy'),
         	'email' => 'andy@126.com',
-            'photoPath' => '/usr/1/photo',
-            'privilege' => '3',
             'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()'),
         );
