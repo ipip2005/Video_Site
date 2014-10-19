@@ -1,25 +1,28 @@
 ﻿userTable
-uId, username, nickName, password, email, photoPath, introduction, privilege, isAdmin
-uId: 用户id
+Id, username, nickName, password, email, photoPath, introduction, privilege
+Id: 用户id
 username: 用户名
 nickName: 昵称
 password: 密码
 email: email
 photoPath: 头像路径
 introduction: 个人简介
-privilege: 权限，可能被管理员禁言，禁止登陆，禁止分享etc。
-isAdmin: 是否是管理员
+privilege: 0表示管理员权限，可能被管理员禁言1，禁止登陆2，禁止分享etc3。
+
 
 
 videoTable
-vId, videoPath, videoHostId, videoName, videoIntroduction, score, putTime, status
+Id, videoPath, videoHostId, videoName, videoIntroduction, view_count, comment_count, score, score_count, putTime, status
 vId: 视频id，系统分配
 videoPath: 视频路径
-videoHostId: 视频创建者id
+videoHostId: 视频创建者id ---users表和videos表的一对多关系实现
 videoName: 视频名
 videoIntroduction: 视频简介
-score: 视频评分
-putTime: 创建时间
+view_count 点击量
+comment_count 评论数量
+score: 视频评分（总评分)
+score_count: 评分次数
+publishTime: 发布时间
 status: 上传成功，上传中，断点
 
 

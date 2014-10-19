@@ -11,6 +11,9 @@ BODY {
 html, body{
 	height:100%;
 }
+header{
+	z-index:1280;
+}
   ::-webkit-scrollbar { width: 10px; }/* Track & scroll thickness */
 
   ::-webkit-scrollbar-track { background-color:#aea; }/* Track color */

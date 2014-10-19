@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Response;
 class HomeController extends BaseController {
 
 	/*
@@ -32,12 +33,15 @@ class HomeController extends BaseController {
         $this->layout->title="FduVideoSite";
         $this->layout->main=View::make('home');
     }
-    public function getLogreg(){
-        $this->layout->title="Login/Register";
-        $this->layout->main=View::make('logreg');
+    public function postRegister(){
+        
     }
     public function getVideo(){
         $this->layout->title="video";//video_name;
         $this->layout->main=View::make('video.blade.php');
+    }
+    public function getLogout(){
+        Auth::Logout();
+        return Redirect::to('/');
     }
 }

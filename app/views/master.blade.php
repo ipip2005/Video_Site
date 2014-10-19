@@ -42,16 +42,18 @@
 						<div class='pop-content' id='p-login'>
 						    <div class='input-group'>
 								<span class='input-group-addon'>账号</span> <input type='text'
-									class='form-control catch-focus' placeholder='Username or Mail-Address'>
+									class='form-control catch-focus account' placeholder='Username or Mail-Address'>
 							</div>
 							<div class='input-group margin-top-10'>
 								<span class='input-group-addon'>密码</span> <input
-									type='password' class='form-control' placeholder='Password'>
+									type='password' class='form-control password' placeholder='Password'>
 							</div>
 							<div class='text-center'>
-								<button type='button' class='btn btn-primary'>登录</button>
+								<button type='button' class='btn btn-primary' onclick='login()'>登录</button>
 							</div>
-					
+					        <div class='text-center' id='error-message' style='display:none'>
+					           <p class='text-danger'>用户不存在或密码错误</p>
+					        </div>
 					   </div>
 					       ">
 					       <span>登陆</span>
