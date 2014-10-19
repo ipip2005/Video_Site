@@ -16,10 +16,21 @@ class UserController extends BaseController {
      */
     public function __construct() {
         // updated: prevents re-login.
-        $this->beforeFilter ( 'auth' );
+        $this->beforeFilter ( 'auth' ,array('except' => 'getIndex'));
+    }
+    public function getIndex(){
+        $user = User::findOrFail(Input::get("uid"));
+        $name = $user->nickname;
+        if (empty($name)) $name = $user->username;
+        $this->layout->title=$name."\'s home";
+        $this->layout->main=View::make('user/ihome')->with(compact('user','name'));
     }
     public function getIhome(){
+        $user = Auth::user();
+        $name = $user->nickname;
+        if (empty($name)) $name = $user->username;
         $this->layout->title="My Home";
-        $this->layout->main=View::make('user/ihome');
+        $this->layout->user_nav=View::make('user/index');
+        $this->layout->main=View::make('user/ihome')->with(compact('user','name'));
     }
 }

@@ -111,7 +111,6 @@
 			</div>
 		</nav>
 	</header>
-	
 	@if(Session::has("needlogin"))
     <script>
 		$(function () {
@@ -170,7 +169,19 @@
 		});
 	</script>
 	@endif
+	<script>
+	   $(function(){
+		   $("header").on("keypress", ".form-control", function(event){
+			   if (event.keyCode=="13"){
+				   $(".popover button").trigger("click");
+			   }
+		   });
+	   });
+	</script>
 	<div class="main-footer-wrap">
+	   @if(isset($user_nav))
+	   {{$user_nav}}
+	   @endif
 	   <div class="main-wrap">
 		  <div class="container">{{$main}}</div>
 	   </div>
