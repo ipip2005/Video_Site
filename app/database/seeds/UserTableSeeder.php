@@ -13,6 +13,7 @@ class UserTableSeeder extends Seeder
             'nickName' => 'Fdu Video Administrator',
             'password' => Hash::make('fvroot'),
         	'email' => 'supersingerman@126.com',
+            'photoPath' => '/usr/1/photo',
             'privilege' => '0',
             'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()'),
