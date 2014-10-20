@@ -37,10 +37,19 @@ class UserController extends BaseController {
     public function getUpload(){
         $user = Auth::user();
         $name = $user->nickname;
-        $active = 'ihome';
+        $active = 'upload';
         if (empty($name)) $name = $user->username;
-        $this->layout->title="My Home";
+        $this->layout->title="My Home-Video";
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
         $this->layout->main=View::make('user/upload')->with(compact('user','name'));
+    }
+    public function getSettings(){
+        $user = Auth::user();
+        $name = $user->nickname;
+        $active = 'settings';
+        if (empty($name)) $name = $user->username;
+        $this->layout->title="My Home-Setting";
+        $this->layout->user_nav=View::make('user/index')->with(compact('active'));
+        $this->layout->main=View::make('user/settings')->with(compact('user','name'));
     }
 }
