@@ -28,9 +28,10 @@ status: 上传成功，上传中，断点
 
 
 groupTable
-groupId, groupName
+groupId, groupName, user_id
 groupId: 组id，系统分配
 groupName: 组名
+user_id
 
 mainTable
 uId, vId, groupId,  shareTime
