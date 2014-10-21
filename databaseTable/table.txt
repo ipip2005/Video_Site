@@ -10,6 +10,7 @@ introduction: 个人简介
 privilege: 0表示管理员权限，可能被管理员禁言1，禁止登陆2，禁止分享etc3。
 
 
+
 videoTable
 Id, videoPath, videoHostId, videoName, videoIntroduction, view_count, comment_count, score, score_count, putTime, status
 vId: 视频id，系统分配
@@ -23,14 +24,14 @@ score: 视频评分（总评分)
 score_count: 评分次数
 publishTime: 发布时间
 status: 上传成功，上传中，断点
-// 视频准备加标签么？
+
 
 
 groupTable
-groupId, groupName
+groupId, groupName, user_id
 groupId: 组id，系统分配
 groupName: 组名
-// 组是一个用户的朋友的标签么？
+user_id
 
 mainTable
 uId, vId, groupId,  shareTime
@@ -38,6 +39,7 @@ uId: 用户id
 vId: 视频id
 groupId: 可见组id
 shareTime: 分享时间
+
 
 
 userRelationTable
@@ -55,7 +57,7 @@ toUserId: 被评论用户id，为0表示对视频评论
 vId: 被评论视频id
 comment: 评论
 commentTime: 评论时间
-//这里的comment加个commentId?，这样用户能针对一个视频有多个评论，也可以针对之前comment进行评论。
+
 
 
 scoreTable
