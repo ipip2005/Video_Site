@@ -12,13 +12,20 @@ function error_message(message){
 function login(){
 	var account = $(".account").val();
 	var password = $('.password').val();
-	if (account=="" || password=="") return;
+	if (account==""){
+		error_message("账号不能为空");
+		return;
+	}
+	if (password==""){
+		error_message("密码不能为空");
+		return;
+	}
 	$.ajax({ url:"/login", async:"false", type:"POST", data:{"account":account,"password":password},
 		dataTpye:'json',
 		success:function(response){
 			var res = response.response;
 			if (res=="ok")history.go(0); else{
-				error_message("用户不存在或密码错误");
+				error_message("登陆失败");
 			}
 		},
 	});

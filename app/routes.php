@@ -35,6 +35,7 @@ Route::post('/register', array('before' =>'guest', function(){
     DB::table('users')->insert($user);
     return Response::json(array('success'=>'success'));
 }));
+Route::controller('/video', 'VideoController');
 Route::controller('/user/friends', 'FriendsController');
 Route::controller('/user', 'UserController');
 Route::controller('/', 'HomeController');

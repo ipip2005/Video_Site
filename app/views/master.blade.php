@@ -185,7 +185,7 @@
 	   {{$user_nav}}
 	   @endif
 	   <div class="main-wrap">
-		  <div class="container">{{$main}}</div>
+		  <div class="container-fluid">{{$main}}</div>
 	   </div>
 	   <footer class="footer text-center"> This_is_Footer </footer>
 	</div>

@@ -4,7 +4,7 @@
 </ul>
 <div id="myTabContent" class="tab-content">
 	<div class="tab-pane fade in active" id="Podcast">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row clearfix">
 				<div class="col-md-3">
 					<img src="*.jpg" style="width: 100%; height: auto;">
@@ -28,15 +28,14 @@
 		</div>
 	</div>
 	<div class="tab-pane fade in" id="Upload">
-		<div class="container">
-			<div class="row">
-				<a href="#" id="browseButton">Select files</a>
-
+		<div class="container-fluid">
+			<div class="row text-center">
+				<a href="javascript:;" id="browseButton"><img src="/i/upload.png" alt="upload"></a>
 				<script src="/js/resumable.js"></script>
 				<script>
-function upload_to(url){
 var r = new Resumable({
-  target:url
+  target:'/video/upload',
+  query:{user_id:'<?php echo $user->id?>'}
 });
   
 r.assignBrowse(document.getElementById('browseButton'));
@@ -67,6 +66,9 @@ r.on('complete', function(){
     //console.debug();
   });
 r.on('progress', function(){
+	now = Math.round(r.progress()*1000000)/10000;
+	$(".progress-bar").attr({"aria-valuenow":now,"style":"width: "+now+"%"});
+	$(".progress-bar span").html(""+now+"% Complete");
     //console.debug();
   });
 r.on('error', function(message, file){
@@ -78,9 +80,17 @@ r.on('pause', function(){
 r.on('cancel', function(){
     //console.debug();
   });
-}
 </script>
 				<!--{{'/video/id'}}-->
+			</div>
+			<div class="row">
+				<div class="progress col-xs-8 col-xs-offset-2">
+					<div class="progress-bar progress-bar-primary progress-bar-striped"
+						role="progressbar" aria-valuenow="0" aria-valuemin="0"
+						aria-valuemax="100" style="width: 0%;">
+						<span>0% Complete</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
