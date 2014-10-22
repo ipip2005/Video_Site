@@ -107,7 +107,7 @@
 				</div>
 				<div class="master-nav-item col-xs-2">
 						<!-- upload video -->
-						<button class="btn-success up-button">上传视频</button>
+						<button class="btn-success up-button" onclick="javascript:window.location.href='/user/upload';">上传视频</button>
 				</div>
 				</div>
 			</div>
