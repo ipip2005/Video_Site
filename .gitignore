@@ -8,3 +8,4 @@ composer.lock
 Thumbs.db
 /public/video
 /public/upload_log.txt
+/public/temp

@@ -1,9 +1,9 @@
-<ul class="nav nav-tabs">
-	<li class="active"><a href="#Podcast" role="tab" data-toggle="tab">已发布视频</a></li>
-	<li><a href="#Upload" role="tab" data-toggle="tab">上传视频</a></li>
+<ul class="nav nav-tabs" id="myTab">
+	<li <?php if ($default_page=='podcast')echo 'class="active"'?>><a href="#Podcast" role="tab" data-toggle="tab">已发布视频</a></li>
+	<li <?php if ($default_page=='upload')echo 'class="active"'?>><a href="#Upload" role="tab" data-toggle="tab">上传视频</a></li>
 </ul>
 <div id="myTabContent" class="tab-content">
-	<div class="tab-pane fade in active" id="Podcast">
+	<div class="tab-pane fade in <?php if ($default_page=='podcast')echo "active"?>" id="Podcast">
 		<div class="container-fluid">
 			<div class="row clearfix">
 				<div class="col-md-3">
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="tab-pane fade in" id="Upload">
+	<div class="tab-pane fade in <?php if ($default_page=='upload')echo "active"?>" id="Upload">
 		<div class="container-fluid">
 			<div class="row text-center">
 				<a href="javascript:;" id="browseButton"><img src="/i/upload.png" alt="upload"></a>
@@ -61,6 +61,7 @@ r.on('fileError', function(file, message){
   });
 r.on('uploadStart', function(){
     //console.debug();
+    $(".progress").show();
   });
 r.on('complete', function(){
     //console.debug();
@@ -91,6 +92,7 @@ r.on('cancel', function(){
 						<span>0% Complete</span>
 					</div>
 				</div>
+				<script>$(".progress").hide()</script>
 			</div>
 		</div>
 	</div>
