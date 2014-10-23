@@ -28,6 +28,40 @@ class VideoController extends \Controller {
 	 *
 	 * @return void
 	 */
+	public function postChangeName(){
+	    $name = Input::get("name");
+	    $id = Input::get("id");
+	    if (Video::find($id)->user_id==Auth::id()){//请求更改的视频是自己的视频才更改，防止篡改
+	        $video = Video::find($id);
+	        $video->name = $name;
+	        $video->save();
+	        return Response::json(array("success"=>"ok"));
+	    } else{
+	        return Response::json(array("error"=>"wrong request"));
+	    }
+	}
+	public function postChangeIntr(){
+	    $intr = Input::get("intr");
+	    $id = Input::get("id");
+	    if (Video::find($id)->user_id==Auth::id()){//请求更改的视频是自己的视频才更改，防止篡改
+	        $video = Video::find($id);
+	        $video->introduction = $intr;
+	        $video->save();
+	        return Response::json(array("success"=>"ok"));
+	    } else{
+	        return Response::json(array("error"=>"wrong request"));
+	    }
+	}
+	public function postDelete(){
+	    $id = Input::get("id");
+	    if (Video::find($id)->user_id==Auth::id()){
+	      $video = Video::find($id);
+	      $video->delete();
+	       return Response::json(array("success"=>"ok"));
+	    } else{
+	        return Response::json(array("error"=>"wrong request"));
+	    }
+	}
 	public function getCreate(){
 	    $user = Auth::user();
 	    if (Video::where('user_id','=',$user->id)->where('status','<>','0')

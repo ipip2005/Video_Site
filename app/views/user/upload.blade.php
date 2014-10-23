@@ -6,7 +6,7 @@
 	<div class="tab-pane fade in <?php if ($default_page=='podcast')echo "active"?>" id="Podcast">
 		<div class="container-fluid margin-tb-10">
 		    <?php $first=false?>
-		    @foreach(Auth::user()->videos as $video)
+		    @foreach(Auth::user()->videos()->orderBy('publishTime','Desc')->get() as $video)
 		    @if($first)
 		    <div class="divider">
 		    </div>
@@ -20,20 +20,25 @@
 				<div class="col-md-7 text-left">
 					<div class="row clearfix">
 						<div class="col-md-3"><p>视频名称：</p></div>
-						<div class="col-md-6 soft-text">{{$video->name}}</div>
-						<div class="col-md-3">
-						    <button class="btn-success border-0"><i class="icon-edit"> </i>编辑</button>
-						    
+						<div class="col-md-6 soft-text editx" id="edit-name-<?php echo $video->id?>"><p>{{$video->name}}</p><input type="text"></div>
+						<div class="col-md-3 edit">
+						    <button class="btn-success border-0 edit-<?php echo $video->id?>" onclick="edit_name(<?php echo $video->id?>)"><i class="icon-edit"> </i>编辑</button>
+						    <button class="btn-success border-0 xedit-<?php echo $video->id?>"onclick="save_edit_name(<?php echo $video->id?>)"><i class="icon-edit"> </i>保存</button>
+						    <button class="btn-danger border-0 xedit-<?php echo $video->id?>" onclick="cancel_edit_name(<?php echo $video->id?>)"><i class="icon-remove-circle"> </i>取消</button>
 						</div>
+						<script>$(".edit .xedit-<?php echo $video->id?>").hide()</script>
 					</div>
 					<div class="row clearfix margin-top-10">
 						<div class="col-md-3"><p>视频简介：</p></div>
-						<div class="col-md-6 soft-text">{{$video->introduction}}</div>
-						<div class="col-md-3">
-						    <button class="btn-success border-0"><i class="icon-edit"> </i>编辑</button>
-						    
+						<div class="col-md-6 soft-text editx" id="edit2-intr-<?php echo $video->id?>"><p>{{$video->introduction}}</p><input type="text"></div>
+						<div class="col-md-3 edit2">
+						    <button class="btn-success border-0 edit2-<?php echo $video->id?>" onclick="edit_intr(<?php echo $video->id?>)"><i class="icon-edit"> </i>编辑</button>
+						    <button class="btn-success border-0 xedit2-<?php echo $video->id?>"onclick="save_edit_intr(<?php echo $video->id?>)"><i class="icon-edit"> </i>保存</button>
+						    <button class="btn-danger border-0 xedit2-<?php echo $video->id?>" onclick="cancel_edit_intr(<?php echo $video->id?>)"><i class="icon-remove-circle"> </i>取消</button>
 						</div>
+						<script>$(".edit2 .xedit2-<?php echo $video->id?>").hide()</script>
 					</div>
+					<script>$(".editx input").hide()</script>
 					<div class="row clearfix margin-top-10">
 					   <div class="col-md-3"><p>发布日期：</p></div>
 					   <div class="col-md-6 soft-text">{{$video->publishTime}}</div>				   

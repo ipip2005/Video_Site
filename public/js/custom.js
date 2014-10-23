@@ -105,3 +105,67 @@ function delete_video(id){
 	$.ajax({ url:"/video/delete", async:"false", type:"POST", data:{"id":id}});
 	$("#video-"+id).hide(500,function(){this.remove()});
 }
+function edit_name(id){
+	$(".edit .edit-"+id).hide(200);
+	$(".edit .xedit-"+id).delay(200).show(300);
+	text = $("#edit-name-"+id+" p").html();
+	$("#edit-name-"+id+" p").hide();
+	$("#edit-name-"+id+" input").attr({"value":text});
+	$("#edit-name-"+id+" input").show();
+}
+function cancel_edit_name(id){
+	$(".edit .xedit-"+id).hide(200);
+	$(".edit .edit-"+id).delay(200).show(300);
+	$("#edit-name-"+id+" input").hide();
+	$("#edit-name-"+id+" p").show();
+}
+function save_edit_name(id){
+	text = $("#edit-name-"+id+" input").val();
+	//ajax
+	$.ajax({ url:"/video/change-name", async:"false", type:"POST", data:{"name":text,"id":id},
+		dataTpye:'json',
+		success:function(response){
+			if (reponse.error.length>0) {
+				alert("修改失败");
+				return;
+			}
+		},
+	});
+	$(".edit .xedit-"+id).hide(200);
+	$(".edit .edit-"+id).delay(200).show(300);
+	$("#edit-name-"+id+" p").html(text);
+	$("#edit-name-"+id+" input").hide();
+	$("#edit-name-"+id+" p").show();
+}
+function edit_intr(id){
+	$(".edit2 .edit2-"+id).hide(200);
+	$(".edit2 .xedit2-"+id).delay(200).show(300);
+	text = $("#edit2-intr-"+id+" p").html();
+	$("#edit2-intr-"+id+" p").hide();
+	$("#edit2-intr-"+id+" input").attr({"value":text});
+	$("#edit2-intr-"+id+" input").show();
+}
+function cancel_edit_intr(id){
+	$(".edit2 .xedit2-"+id).hide(200);
+	$(".edit2 .edit2-"+id).delay(200).show(300);
+	$("#edit2-intr-"+id+" input").hide();
+	$("#edit2-intr-"+id+" p").show();
+}
+function save_edit_intr(id){
+	text = $("#edit2-intr-"+id+" input").val();
+	//ajax
+	$.ajax({ url:"/video/change-intr", async:"false", type:"POST", data:{"intr":text,"id":id},
+		dataTpye:'json',
+		success:function(response){
+			if (reponse.error.length>0) {
+				alert("修改失败");
+				return;
+			}
+		},
+	});
+	$(".edit2 .xedit2-"+id).hide(200);
+	$(".edit2 .edit2-"+id).delay(200).show(300);
+	$("#edit2-intr-"+id+" p").html(text);
+	$("#edit2-intr-"+id+" input").hide();
+	$("#edit2-intr-"+id+" p").show();
+}
