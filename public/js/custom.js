@@ -73,3 +73,35 @@ function register(){
 		},
 	});
 }
+
+function publish(){
+	name = $("#pub-name").val();
+	introduction = $('#pub-intro').val();
+	if (name.length>50) {
+		error_message("名字超过50字");
+		return;
+	}
+	if (name.length==0) {
+		error_message("名字不能为空");
+		return;
+	}
+	if (introduction.length==0){
+		error_message("描述不能为空");
+		return;
+	}
+	if (introduction.length>50){
+		error_message("描述超过250字");
+		return;
+	}
+	$.ajax({ url:"/video/publish", async:"false", type:"POST", data:{"name":name,"introduction":introduction},
+		dataTpye:'json',
+		success:function(response){
+			window.location.href="/user/podcast";
+		},
+	});
+}
+function delete_video(id){
+	if (!confirm("确认删除吗")) return;
+	$.ajax({ url:"/video/delete", async:"false", type:"POST", data:{"id":id}});
+	$("#video-"+id).hide(500,function(){this.remove()});
+}

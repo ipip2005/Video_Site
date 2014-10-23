@@ -33,9 +33,10 @@ class HomeController extends BaseController {
         $this->layout->title="FduVideoSite";
         $this->layout->main=View::make('home');
     }
-    public function getVideo(){
+    public function getWatch(){
+        $video = Video::find(Input::get("vid"));
         $this->layout->title="video";//video_name;
-        $this->layout->main=View::make('video');
+        $this->layout->main=View::make('video')->with(compact('video'));
     }
     public function getLogout(){
         Auth::Logout();

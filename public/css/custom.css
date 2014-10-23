@@ -131,3 +131,16 @@ html, body{
 	color:#17a689;
 	border-bottom:2px solid #37afe4;
 }
+.half-width{
+	width:50%;
+}
+.vertical-center{
+	vertical-align:middle;
+}
+.border-0{
+	border:0;
+}
+.soft-text{
+	color:#17a689;
+	font-family: 'Open Sans', 'trebuchet ms', arial, sans-serif;
+}

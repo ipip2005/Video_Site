@@ -25,6 +25,7 @@ class CreateVideosTable extends Migration {
 	        $table->unsignedInteger('score_count');
 	        $table->dateTime('publishTime');
 	        $table->unsignedInteger('status');
+	        $table->timestamps();
 	    });
 	}
 

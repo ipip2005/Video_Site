@@ -17,7 +17,7 @@ class VideoController extends \Controller {
        score: 视频评分（总评分)
        score_count: 评分次数
        publishTime: 发布时间
-       status: 上传成功，上传中，断点/0,1,2
+       status: 上传成功，未上传成功，上传成功未发布/0,1,2
 	 */
 	/**
 	 * layout to use
@@ -28,12 +28,31 @@ class VideoController extends \Controller {
 	 *
 	 * @return void
 	 */
-	protected function setupLayout()
-	{
-		if ( ! is_null($this->layout) )
-		{
-			$this->layout = View::make($this->layout);
-		}
+	public function getCreate(){
+	    $user = Auth::user();
+	    if (Video::where('user_id','=',$user->id)->where('status','<>','0')
+	        ->where('name','=',Input::get('file_name'))->count()>0)
+	       return Response::json(array('success'=>'continue'));
+	    if (Video::where('user_id','=',$user->id)->where('status','<>','0')->count()>0)
+	       return Response::json(array('error'=>'have unuploaded video'));
+	    $video = new Video;
+	    $video->status=1;
+	    $video->user_id = $user->id;
+	    $video->name=Input::get('file_name');
+	    $video->save();
+	    return Response::json(array('success'=>'new'));
+	}
+
+	public function postPublish(){
+	    $video = Video::where('user_id','=',Auth::id())->where('status','=','2')->firstOrFail();
+	    $name = Input::get('name');
+	    $introduction = Input::get('introduction');
+	    $video->name = $name;
+	    $video->introduction = $introduction;
+	    $video->status = 0;
+	    $video->publishTime = date("Y-m-d H:i:s",time());
+	    $video->save();
+	    return Response::json(array('success'=>'published'));
 	}
 	public function getUpload() {
 		return $this->Upload ();
@@ -41,6 +60,13 @@ class VideoController extends \Controller {
 	public function postUpload() {
 		return $this->Upload ();
 	}
+	/**
+	 * 业务逻辑：
+	 *     用户开始上传->建立新的视频项目，标记为上传中，一个用户只允许一个未上传完毕的视频
+	 *     上传成功->将该标记改完上传成功，也就是可以发布该视频了
+	 *     继续上传->用户选择继续上传一个未上传完毕的视频，检查文件信息是否匹配
+	 *     
+	 */
 	public function Upload() {
 		// //////////////////////////////////////////////////////////////////
 		// THE SCRIPT
@@ -156,14 +182,22 @@ class VideoController extends \Controller {
 		// check that all the parts are present
 		// the size of the last part is between chunkSize and 2*$chunkSize
 		if ($total_files * $chunkSize >= ($totalSize - $chunkSize + 1)) {
-				
+		    $vid = 'temp';
+		    foreach(Video::where('user_id','=',Auth::id())->where('status','<>','0')->get() as $video){
+		        $vid = $video->id;
+		    }
+		    mkdir('video/'.$vid);
+		    $route = 'video/'.$vid;
 			// create the final destination file
-			if (($fp = fopen ( 'temp/' . $fileName, 'w' )) !== false) {
+			if (($fp = fopen ( $route.'/' . $fileName, 'w' )) !== false) {
 				for($i = 1; $i <= $total_files; $i ++) {
 					fwrite ( $fp, file_get_contents ( $temp_dir . '/' . $fileName . '.part' . $i ) );
 					$this->_log ( 'writing chunk ' . $i );
 				}
 				fclose ( $fp );
+				Video::where('user_id','=',Auth::id())->where('status','<>','0')
+				    ->update(array('status'=>'2','path'=>$route.'/' . $fileName));
+				$this->createThumbnail($route,$fileName);
 			} else {
 				$this->_log ( 'cannot create the destination file' );
 				return false;
@@ -177,6 +211,13 @@ class VideoController extends \Controller {
 				$this->rrmdir ( $temp_dir );
 			}
 		}
+	}
+	public function createThumbnail($route, $fileName){
+	    $file = $route.'/'.$fileName;
+	    $time = 1;
+	    $thumbName=$route.'/'."_thumb.jpg";
+	    $ffmpeg_cmd = "ffmpeg -i ".$file." -y -f mjpeg -ss 3 -t ".$time." -s 320*240 ".$thumbName;
+	    system($ffmpeg_cmd);
 	}
 	public function missingMethod($parameters = array()){
 		return Redirect::to('/');

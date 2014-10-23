@@ -1,23 +1,26 @@
 {{ HTML::style('css/minimalist.css') }}
 {{ HTML::script('js/flowplayer.min.js') }}
-<div>TITLE</div>
 <div class="container">
+    <div class="row margin-tb-10">
+        <h1>{{$video->name}}</h1>
+    </div>
 	<div class="row">
 		<div class="col-md-8">
 			<div class="flowplayer" style="background-color:black;width:100%;height:450px;">
-				<video src="/i/movie.ogg">
+				<video src="<?php echo '/'.$video->path?>">
 					您的浏览器不支持播放插件
 				</video>
 			</div>	
 		</div>
 		<div class="col-md-4">
-			<div style="height:150px">视频介绍：一只小熊正在过河。好可爱啊好可爱！！</div>
+			<div><p>{{$video->introduction}}</p></div>
 			<br/>
 			<br/>
-			<div>上传者：ipip</div>
+			<div>上传者:<?php $user = User::find($video->user_id);
+			     if (empty($user->nickname))echo $user->username; else echo $user->nickname?></div>
 			<br/>
 			<br/>
-			<div>点击量：200</div>
+			<div>点击量：{{$video->view_count}}</div>
 			<br/>
 			<br/>
 			<div>☆☆☆☆☆</div>
@@ -26,7 +29,6 @@
 			<div><button class="btn btn-primary">分享</button></div>
 		</div>
 	</div>
-	<div style="height:25px"></div>
 	<div class="row">
 		<div class="col-md-8">
 			<div class="input-group">
