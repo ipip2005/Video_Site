@@ -1,18 +1,28 @@
 <?php
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Http\Response;
-class UploadController extends \Controller {
+class VideoController extends \Controller {
 	public function __construct() {
 		// updated: prevents re-login.
 		$this->beforeFilter ( 'auth');
 	}
 	/**
+	 * Video Table:
+	   id: 视频id，系统分配
+       path: 视频路径
+       user_id: 视频创建者id ---users表和videos表的一对多关系实现
+       Name: 视频名
+       Introduction: 视频简介
+       view_count 点击量
+       comment_count 评论数量
+       score: 视频评分（总评分)
+       score_count: 评分次数
+       publishTime: 发布时间
+       status: 上传成功，上传中，断点/0,1,2
+	 */
+	/**
 	 * layout to use
 	 * @var View
 	 */
-	protected $layout = 'blank';
-	
 	/**
 	 * Setup the layout used by the controller.
 	 *
@@ -41,7 +51,7 @@ class UploadController extends \Controller {
 			$temp_dir = 'temp/' . $_GET ['resumableIdentifier'];
 			$chunk_file = $temp_dir . '/' . $_GET ['resumableFilename'] . '.part' . $_GET ['resumableChunkNumber'];
 				
-			if (file_exists ( $chunk_file )) {
+			if (file_exists ($chunk_file )) {
 				header ( "HTTP/1.0 200 Ok" );
 			} else {
 				App::abort(404);//header("HTTP/1.0 404 Not Found");
@@ -61,19 +71,18 @@ class UploadController extends \Controller {
 			// the file is stored in a temporary directory
 			$temp_dir = 'temp/' . $_POST ['resumableIdentifier'];
 			$dest_file = $temp_dir . '/' . $_POST ['resumableFilename'] . '.part' . $_POST ['resumableChunkNumber'];
-	
 			// create the temporary directory
 			if (! is_dir ( $temp_dir )) {
 				mkdir ( $temp_dir, 0777, true );
 			}
-	
 			// move the temporary file
-			if (! move_uploaded_file ( $file ['tmp_name'], $dest_file )) {
+			$tmp_name = $file ['tmp_name'];
+			if (! move_uploaded_file ( $file ['tmp_name'], iconv("UTF-8","gb2312",$dest_file) )) {
 				$this->_log ( 'Error saving (move_uploaded_file) chunk ' . $_POST ['resumableChunkNumber'] . ' for file ' . $_POST ['resumableFilename'] );
 			} else {
 					
 				// check if all the parts present, and create the final destination file
-				$this->createFileFromChunks ( $temp_dir, $_POST ['resumableFilename'], $_POST ['resumableChunkSize'], $_POST ['resumableTotalSize'] );
+				$this->createFileFromChunks ( $temp_dir, iconv("UTF-8","gb2312",$_POST ['resumableFilename']), $_POST ['resumableChunkSize'], $_POST ['resumableTotalSize'] );
 			}
 		}
 		header ( "HTTP/1.0 200 Ok" );

@@ -34,6 +34,16 @@ class UserController extends BaseController {
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
         $this->layout->main=View::make('user/ihome')->with(compact('user','name'));
     }
+    public function getPodcast(){
+        $user = Auth::user();
+        $name = $user->nickname;
+        $active = 'upload';
+        if (empty($name)) $name = $user->username;
+        $this->layout->title="My Home-Video";
+        $this->layout->user_nav=View::make('user/index')->with(compact('active'));
+        $default_page = 'podcast';
+        $this->layout->main=View::make('user/upload')->with(compact('user','name','default_page'));
+    }
     public function getUpload(){
         $user = Auth::user();
         $name = $user->nickname;
@@ -41,7 +51,8 @@ class UserController extends BaseController {
         if (empty($name)) $name = $user->username;
         $this->layout->title="My Home-Video";
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
-        $this->layout->main=View::make('user/upload')->with(compact('user','name'));
+        $default_page = 'upload';
+        $this->layout->main=View::make('user/upload')->with(compact('user','name','default_page'));
     }
     public function getFriends(){
         $user = Auth::user();
