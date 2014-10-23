@@ -9,7 +9,8 @@ class FriendsController extends Controller {
     public function postAddFriend() {
 	if (DB::table('users')->where('id','=',Input::get('friend'))->count()==0)
 		return Response::json(array('error'=>'no_such_friend'));
-	if (DB::table('urelation')->where('friend','=',Input::get('friend'))->count()>0)
+	if (DB::table('urelation')->where('friend','=',Input::get('friend'))
+				  ->where('host','=',$user->id)->count()>0)
 		return Response::json(array('error'=>'been_added_friend'));
         $user = Auth::user();
         $urelation = array(
@@ -90,7 +91,9 @@ class FriendsController extends Controller {
                  );
 	if (DB::table('groups')->where($group)->count()==0)
 		return Response::json(array('error'=>'no_such_group'));
-        $user = Auth::user();
+	$groupid = DB::table('groups')->where($group)->first();
+	DB::table('urelation')->where('host','=',Auth::user()->id)
+			      ->where('group','=',$groupid->id)->delete();
         DB::table('groups')->where($group)->delete();
         return Response::json(array('success'=>'success'));        
     }
