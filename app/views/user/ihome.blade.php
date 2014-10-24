@@ -12,48 +12,15 @@
 			</div>
 			<!--已上传Image-->
 			<div class="row clearfix">
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
+			    @foreach($videos as $video)
+				<div class="col-xs-4">
+					<a href="/watch?vid=<?php echo $video->id?>">
+					   <img src="/video/<?php echo $video->id?>/_thumb.jpg" style="width: 100%; height: auto;" />
+					</a>
+					<div>{{$video->name}}</div>
+					<div>播放量：{{$video->view_count}}</div>
 				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-			</div>
-			<div class="row clearfix">
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
+				@endforeach
 			</div>
 
 			<div class="row">

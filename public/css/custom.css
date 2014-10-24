@@ -142,5 +142,9 @@ html, body{
 }
 .soft-text{
 	color:#17a689;
-	font-family: 'Open Sans', 'trebuchet ms', arial, sans-serif;
+	font-family: 'Open  Sans', 'trebuchet ms', arial, sans-serif;
+}
+.up-hide{
+	margin-top:40px;
+	margin-bottom:20px;
 }

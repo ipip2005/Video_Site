@@ -79,7 +79,7 @@ r.on('fileSuccess', function(file){
   });
 r.on('fileProgress', function(file){
     console.debug(file);
-  });
+  }); 
 r.on('fileAdded', function(file, event){
 	name = file.name||file.fileName;
 	$.ajax({ url:"/video/create", async:"false", type:"GET", data:{"file_name":name},
@@ -134,10 +134,11 @@ r.on('cancel', function(){
 				<!--{{'/video/id'}}-->
 			</div>
 			<div class="row up-hide">
-			    <div class="col-xs-6">
-			     
+			    <div class="col-xs-6 text-right">
+			         <button class="btn-primary border-0" onclick="upload_pause()" id="pause-button">暂停</button>
 			    </div>
-			    <div class="col-xs-6">
+			    <div class="col-xs-6 text-left">
+			         <button class="btn-danger border-0" onclick="upload_cancel(<?php echo Auth::id();?>)" id="cancel-button">取消</button>
 			    </div>
 			</div>
 			<div class="row">

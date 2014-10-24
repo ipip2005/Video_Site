@@ -169,3 +169,25 @@ function save_edit_intr(id){
 	$("#edit2-intr-"+id+" input").hide();
 	$("#edit2-intr-"+id+" p").show();
 }
+function upload_pause(){
+	r.pause();
+	$("#pause-button").html("续传");
+	$("#pause-button").attr({"onclick":"upload_restart()"})
+	$("#pause-button").attr({"id":"restart-button"});
+}
+function delete_unpublished_video(id){
+	$.ajax({url:"/video/clear",type:"get",data:{"id":id},async:false});
+}
+function upload_cancel(id){
+	if (confirm("确认取消当前上传中的视频吗")){
+		r.cancel();
+		delete_unpublished_video(id);
+		location=location;
+	}
+}
+function upload_restart(){
+	$("#restart-button").html("暂停");
+	$("#restart-button").attr({"onclick":"upload_pause()"})
+	$("#restart-button").attr({"id":"pause-button"});
+	r.upload();
+}
