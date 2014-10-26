@@ -1,100 +1,148 @@
 <?php
 
-class FriendsController extends Controller {
+class FriendsController extends Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->beforeFilter('auth');
     }
 
-    public function postAddFriend() {
-	if (DB::table('users')->where('id','=',Input::get('friend'))->count()==0)
-		return Response::json(array('error'=>'no_such_friend'));
-	if (DB::table('urelation')->where('friend','=',Input::get('friend'))
-				  ->where('host','=',$user->id)->count()>0)
-		return Response::json(array('error'=>'been_added_friend'));
+    public function postAddFriend()
+    {
         $user = Auth::user();
+        $id = Input::get('fid');
+        if (User::where('id', '=', $id)->count() == 0)
+            return Response::json(array(
+                'error' => 'no_such_friend'
+            ));
+        if ($user->id == $id) return Response::json(array('error'=>'cannot add yourself as friend'));
+        
+        if (DB::table('urelation')->where('friend', '=', $id)
+            ->where('host', '=', $user->id)
+            ->count() > 0)
+            return Response::json(array(
+                'error' => 'been_added_friend'
+            ));
         $urelation = array(
-                        'host' => $user->id,
-                        'friend' => Input::get('friend'),
-                        'group' => 1,
-                        'created_at' => DB::raw('NOW()'),
-                        'updated_at' => DB::raw('NOW()'),
-                     );
+            'host' => $user->id,
+            'friend' => $id,
+            'group' => 1,
+            'created_at' => DB::raw('NOW()'),
+            'updated_at' => DB::raw('NOW()')
+        );
         DB::table('urelation')->insert($urelation);
-        return Response::json(array('success'=>'success'));
+        return Response::json(array(
+            'success' => 'success'
+        ));
     }
 
-    public function postAddFriendToGroup() {
-        if (Input::get('group')=='1')
-		return Response::json(array('error'=>'op_on_default_group'));
-	if (DB::table('users')->where('id','=',Input::get('friend'))->count()==0)
-		return Response::json(array('error'=>'no_such_friend'));
-	if (DB::table('groups')->where('id','=',Input::get('group'))->count()==0)
-		return Response::json(array('error'=>'no_such_group'));
+    public function postAddFriendToGroup()
+    {
+        if (Input::get('group') == '1')
+            return Response::json(array(
+                'error' => 'op_on_default_group'
+            ));
+        if (DB::table('users')->where('id', '=', Input::get('friend'))->count() == 0)
+            return Response::json(array(
+                'error' => 'no_such_friend'
+            ));
+        if (DB::table('groups')->where('id', '=', Input::get('group'))->count() == 0)
+            return Response::json(array(
+                'error' => 'no_such_group'
+            ));
         $user = Auth::user();
-	if (DB::table('urelation')->where('host','=',$user->id)
-                                  ->where('friend','=',Input::get('friend'))
-		                  ->where('group','=',Input::get('group'))->count()>0)
-		return Response::json(array('error'=>'been_added_relation'));
+        if (DB::table('urelation')->where('host', '=', $user->id)
+            ->where('friend', '=', Input::get('friend'))
+            ->where('group', '=', Input::get('group'))
+            ->count() > 0)
+            return Response::json(array(
+                'error' => 'been_added_relation'
+            ));
         $urelation = array(
-                        'host' => $user->id,
-                        'friend' => Input::get('friend'),
-                        'group' => Input::get('group'),
-                        'created_at' => DB::raw('NOW()'),
-                        'updated_at' => DB::raw('NOW()'),
-                     );
+            'host' => $user->id,
+            'friend' => Input::get('friend'),
+            'group' => Input::get('group'),
+            'created_at' => DB::raw('NOW()'),
+            'updated_at' => DB::raw('NOW()')
+        );
         DB::table('urelation')->insert($urelation);
-        return Response::json(array('success'=>'success'));        
+        return Response::json(array(
+            'success' => 'success'
+        ));
     }
 
-    public function postAddGroup() {
-        if (Input::get('group')=='default')
-		return Response::json(array('error'=>'op_on_default_group'));
+    public function postAddGroup()
+    {
+        if (Input::get('group') == 'default')
+            return Response::json(array(
+                'error' => 'op_on_default_group'
+            ));
         $user = Auth::user();
-	if (DB::table('groups')->where('user_id','=',$user->id)
-		               ->where('name','=',Input::get('group'))->count()>0)
-		return Response::json(array('error'=>'been_added_group'));
+        if (DB::table('groups')->where('user_id', '=', $user->id)
+            ->where('name', '=', Input::get('group'))
+            ->count() > 0)
+            return Response::json(array(
+                'error' => 'been_added_group'
+            ));
         $user = Auth::user();
         $group = array(
-                    'user_id' => $user->id,
-                    'name' => Input::get('group'),
-                    'created_at' => DB::raw('NOW()'),
-                    'updated_at' => DB::raw('NOW()'),
-                 );
+            'user_id' => $user->id,
+            'name' => Input::get('group'),
+            'created_at' => DB::raw('NOW()'),
+            'updated_at' => DB::raw('NOW()')
+        );
         DB::table('groups')->insert($group);
-        return Response::json(array('success'=>'success'));        
+        return Response::json(array(
+            'success' => 'success'
+        ));
     }
 
-    public function postDelFriendFromGroup() {
-        if (Input::get('group')=='1')
-		return Response::json(array('error'=>'op_on_default_group'));
+    public function postDelFriendFromGroup()
+    {
+        if (Input::get('group') == '1')
+            return Response::json(array(
+                'error' => 'op_on_default_group'
+            ));
         $user = Auth::user();
         $urelation = array(
-                        'host' => $user->id,
-                        'friend' => Input::get('friend'),
-                        'group' => Input::get('group'),
-                     );
-	if (DB::table('urelation')->where($urelation)->count()==0)
-		return Response::json(array('error'=>'no_such_relation'));
-
+            'host' => $user->id,
+            'friend' => Input::get('friend'),
+            'group' => Input::get('group')
+        );
+        if (DB::table('urelation')->where($urelation)->count() == 0)
+            return Response::json(array(
+                'error' => 'no_such_relation'
+            ));
+        
         DB::table('urelation')->where($urelation)->delete();
-        return Response::json(array('success'=>'success'));        
+        return Response::json(array(
+            'success' => 'success'
+        ));
     }
 
-    public function postDelGroup() {
-        if (Input::get('group')=='default')
-		return Response::json(array('error'=>'op_on_default_group'));
+    public function postDelGroup()
+    {
+        if (Input::get('group') == 'default')
+            return Response::json(array(
+                'error' => 'op_on_default_group'
+            ));
         $user = Auth::user();
         $group = array(
-                    'user_id' => $user->id,
-                    'name' => Input::get('group'),
-                 );
-	if (DB::table('groups')->where($group)->count()==0)
-		return Response::json(array('error'=>'no_such_group'));
-	$groupid = DB::table('groups')->where($group)->first();
-	DB::table('urelation')->where('host','=',Auth::user()->id)
-			      ->where('group','=',$groupid->id)->delete();
+            'user_id' => $user->id,
+            'name' => Input::get('group')
+        );
+        if (DB::table('groups')->where($group)->count() == 0)
+            return Response::json(array(
+                'error' => 'no_such_group'
+            ));
+        $groupid = DB::table('groups')->where($group)->first();
+        DB::table('urelation')->where('host', '=', Auth::user()->id)
+            ->where('group', '=', $groupid->id)
+            ->delete();
         DB::table('groups')->where($group)->delete();
-        return Response::json(array('success'=>'success'));        
+        return Response::json(array(
+            'success' => 'success'
+        ));
     }
 }

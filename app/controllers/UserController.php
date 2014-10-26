@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Collection;
 class UserController extends BaseController {
 
     /*
@@ -19,11 +20,14 @@ class UserController extends BaseController {
         $this->beforeFilter ( 'auth' ,array('except' => 'getIndex'));
     }
     public function getIndex(){
+        if (Auth::id() == Input::get('uid')) return $this->getIhome();
         $user = User::findOrFail(Input::get("uid"));
         $name = $user->nickname;
+        $videos = Video::where('user_id','=',$user->id)->orderBy('publishTime','desc')
+        ->take(9)->get();
         if (empty($name)) $name = $user->username;
         $this->layout->title=$name."\'s home";
-        $this->layout->main=View::make('user/ihome')->with(compact('user','name'));
+        $this->layout->main=View::make('user/ihome')->with(compact('user','name','videos'));
     }
     public function getIhome(){
         $user = Auth::user();
@@ -58,18 +62,20 @@ class UserController extends BaseController {
     }
     public function getFriends(){
         $user = Auth::user();
-        $name = $user->nickname;
+        $fids = DB::table('urelation')->where('host','=',$user->id)->where('group','=','1')
+            ->get(array('friend'));
+        $friends = new Collection();
+        foreach ($fids as $value){
+            $friends->add(User::find($value->friend));
+        }
         $active = 'friends';
-        if (empty($name)) $name = $user->username;
         $this->layout->title="My Home-Friends";
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
-        $this->layout->main=View::make('user/friends')->with(compact('user','name'));
-    }    
+        $this->layout->main=View::make('user/friends')->with(compact('user','friends'));
+    }
     public function getSettings(){
         $user = Auth::user();
-        $name = $user->nickname;
         $active = 'settings';
-        if (empty($name)) $name = $user->username;
         $this->layout->title="My Home-Setting";
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
         $this->layout->main=View::make('user/settings')->with(compact('user','name'));

@@ -17,7 +17,7 @@
 				<a class="col-md-3" href="/watch?vid=<?php echo $video->id?>">
 					<img src="<?php echo '/video/'.$video->id.'/_thumb.jpg'?>" style="width: 100%; height: auto;">
 				</a>
-				<div class="col-md-7 text-left">
+				<div class="col-md-8 text-left">
 					<div class="row clearfix">
 						<div class="col-md-3"><p>视频名称：</p></div>
 						<div class="col-md-6 soft-text editx" id="edit-name-<?php echo $video->id?>"><p>{{$video->name}}</p><input type="text"></div>
@@ -30,18 +30,24 @@
 					</div>
 					<div class="row clearfix margin-top-10">
 						<div class="col-md-3"><p>视频简介：</p></div>
-						<div class="col-md-6 soft-text editx" id="edit2-intr-<?php echo $video->id?>"><p>{{$video->introduction}}</p><input type="text"></div>
+						<div class="col-md-6 soft-text editx" id="edit2-intr-<?php echo $video->id?>"><p>{{$video->introduction}}</p><textarea rows="3" style="width:100%"></textarea></div>
 						<div class="col-md-3 edit2">
 						    <button class="btn-success border-0 edit2-<?php echo $video->id?>" onclick="edit_intr(<?php echo $video->id?>)"><i class="icon-edit"> </i>编辑</button>
 						    <button class="btn-success border-0 xedit2-<?php echo $video->id?>"onclick="save_edit_intr(<?php echo $video->id?>)"><i class="icon-edit"> </i>保存</button>
 						    <button class="btn-danger border-0 xedit2-<?php echo $video->id?>" onclick="cancel_edit_intr(<?php echo $video->id?>)"><i class="icon-remove-circle"> </i>取消</button>
 						</div>
-						<script>$(".edit2 .xedit2-<?php echo $video->id?>").hide()</script>
+						<script>$(".edit2 .xedit2-<?php echo $video->id?>").hide();
+						        $("#edit2-intr-<?php echo $video->id?> textarea").hide();</script>
 					</div>
 					<script>$(".editx input").hide()</script>
 					<div class="row clearfix margin-top-10">
 					   <div class="col-md-3"><p>发布日期：</p></div>
-					   <div class="col-md-6 soft-text">{{$video->publishTime}}</div>				   
+					   <div class="col-md-6 soft-text">{{$video->publishTime}}</div>	
+					   <div class="col-md-3">
+					       <button class="btn-danger border-0" onclick="javascript:delete_video(<?php echo $video->id?>)">
+			                   <i class="icon-trash"></i> 删除
+				           </button>
+				       </div>			   
 					</div>
 					<div class="row clearfix margin-top-10">
 					   <div class="col-md-3"><p>点击数:</p></div>
@@ -53,9 +59,8 @@
 					   </div>						   
 					</div>
 				</div>
-				<div class="col-md-2">
-				    <button class="btn-danger border-0" onclick="javascript:delete_video(<?php echo $video->id?>)">删除
-				    </button>
+				<div class="col-md-1">
+				    
 				</div>
 			</div>
 			@endforeach
@@ -82,7 +87,9 @@ r.on('fileProgress', function(file){
   }); 
 r.on('fileAdded', function(file, event){
 	name = file.name||file.fileName;
-	$.ajax({ url:"/video/create", async:"false", type:"GET", data:{"file_name":name},
+	var fileName = name.split('.');
+    var type = fileName[fileName.length-1].toLowerCase();
+	$.ajax({ url:"/video/create", async:"false", type:"GET", data:{"file_name":name,'file_type':type},
 		dataTpye:'json',
 		success:function(response){
 			if (response.error=="have unuploaded video")
@@ -92,10 +99,18 @@ r.on('fileAdded', function(file, event){
 				$(".up-hide").hide();
 			    $("#browseButton").show();
 				return;
+			} else
+			if (response.error=="not supported type")
+			{
+				error_message("请检查视频格式是否符合要求");
+				r.cancel();
+				$(".up-hide").hide();
+			    $("#browseButton").show();
+			    return;
 			}
+			r.upload();
 		},
 	});
-    r.upload();
     //console.debug(file, event);
   });
 r.on('filesAdded', function(array){
@@ -171,11 +186,12 @@ r.on('cancel', function(){
 			
 			<div class="row">
 			    <div class="col-xs-12">
-			        <div class='text-center' id='error-message' style='display:none'>
-					    <p class='text-danger'></p>
+			        <div class="text-center" id="error-message" style="height:40px">
+					    <p class="text-danger" style="line-height:40px"></p>
 					</div>
 			    </div>
 			</div>
+			<script>$("#error-message" p).hide()</script>
 		</div>
 	</div>
 </div>

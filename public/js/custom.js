@@ -142,17 +142,17 @@ function edit_intr(id){
 	$(".edit2 .xedit2-"+id).delay(200).show(300);
 	text = $("#edit2-intr-"+id+" p").html();
 	$("#edit2-intr-"+id+" p").hide();
-	$("#edit2-intr-"+id+" input").attr({"value":text});
-	$("#edit2-intr-"+id+" input").show();
+	$("#edit2-intr-"+id+" textarea").val(text);
+	$("#edit2-intr-"+id+" textarea").show(300);
 }
 function cancel_edit_intr(id){
 	$(".edit2 .xedit2-"+id).hide(200);
 	$(".edit2 .edit2-"+id).delay(200).show(300);
-	$("#edit2-intr-"+id+" input").hide();
+	$("#edit2-intr-"+id+" textarea").hide();
 	$("#edit2-intr-"+id+" p").show();
 }
 function save_edit_intr(id){
-	text = $("#edit2-intr-"+id+" input").val();
+	text = $("#edit2-intr-"+id+" textarea").val();
 	//ajax
 	$.ajax({ url:"/video/change-intr", async:"false", type:"POST", data:{"intr":text,"id":id},
 		dataTpye:'json',
@@ -166,7 +166,7 @@ function save_edit_intr(id){
 	$(".edit2 .xedit2-"+id).hide(200);
 	$(".edit2 .edit2-"+id).delay(200).show(300);
 	$("#edit2-intr-"+id+" p").html(text);
-	$("#edit2-intr-"+id+" input").hide();
+	$("#edit2-intr-"+id+" textarea").hide();
 	$("#edit2-intr-"+id+" p").show();
 }
 function upload_pause(){

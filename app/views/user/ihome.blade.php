@@ -1,3 +1,4 @@
+<?php if (Auth::id()==$user->id) $pre = '我'; else $pre = 'TA'?>
 <div class="margin-top-10">
 	<div class="row clearfix">
 		<!--VideoList-->
@@ -6,12 +7,17 @@
 			<div class="row clearfix margin-tb-10">
 				<div class="col-xs-12">
 					<div class="bg-success">
-						<h3>&nbspTA发布了</h3>
+						<h3>&nbsp{{$pre}}发布了</h3>
 					</div>
 				</div>
 			</div>
 			<!--已上传Image-->
 			<div class="row clearfix">
+			    @if(count($videos)==0)
+			    <div class="col-xs-12 text-center">
+			        <h4 class="soft-text">{{$pre}}未发布过视频</h4>
+			    </div>
+			    @endif
 			    @foreach($videos as $video)
 				<div class="col-xs-4">
 					<a href="/watch?vid=<?php echo $video->id?>">
@@ -30,7 +36,7 @@
 			<div class="row clearfix margin-tb-10">
 				<div class="col-xs-12">
 					<div class="bg-info">
-						<h3>&nbspTA分享了</h3>
+						<h3>&nbsp{{$pre}}分享了</h3>
 					</div>
 				</div>
 			</div>

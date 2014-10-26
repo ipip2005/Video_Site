@@ -116,9 +116,12 @@ class VideoController extends \Controller
     public function getClear(){
         $user = User::find(Input::get('id'));
         $user->videos()->where('status','<>','0')->delete();
+        delDir('temp');
     }
     public function getCreate()
     {
+        $type = Input::get('file_type');
+        if ($type!='flv' && $type!='ogg'&& $type!='mp4') return Response::json(array('error'=>'not supported type'));
         $user = Auth::user();
         if (Video::where('user_id', '=', $user->id)->where('status', '<>', '0')
             ->where('name', '=', Input::get('file_name'))
@@ -306,9 +309,10 @@ class VideoController extends \Controller
                 fclose($fp);
                 Video::where('user_id', '=', Auth::id())->where('status', '=', '1')->update(array(
                     'status' => '2',
-                    'path' => $route . '/' . $fileName
+                    'path' => $route . '/video.flv'
                 ));
                 $this->createThumbnail($route, $fileName);
+                $this->translate($route, $fileName);
             } else {
                 $this->_log('cannot create the destination file');
                 return false;
@@ -323,7 +327,12 @@ class VideoController extends \Controller
             }
         }
     }
-
+    public function translate($route, $filename){
+        $file = $route . '/' . $filename;
+        $ffmpeg_cmd = "ffmpeg -i \"" . $file . "\" -y -ab 32 -ar 22050 -b 800000 ".$route.'/video.flv';
+        $this->_log($ffmpeg_cmd);
+        $this->_log(popen($ffmpeg_cmd, "r"));
+    }
     public function createThumbnail($route, $fileName)
     {
         $file = $route . '/' . $fileName;

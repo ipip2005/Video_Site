@@ -164,3 +164,11 @@ a:hover{
 .setting-item textarea{
 	width:80%;
 }
+.intr-text{
+	text-indent: 2em;
+}
+#friends img{
+	width:60%;
+	height:auto;
+	
+}
