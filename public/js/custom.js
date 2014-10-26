@@ -5,8 +5,8 @@
 }
 function error_message(message){
 	$("#error-message p").html(message);
-	$("#error-message").delay(100).show(500, function(){
-		$("#error-message").delay(3000).hide(500);
+	$("#error-message p").delay(100).show(500, function(){
+		$("#error-message p").delay(3000).hide(500);
 	});
 }
 function login(){

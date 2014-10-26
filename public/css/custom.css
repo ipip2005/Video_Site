@@ -93,9 +93,12 @@ html, body{
 	height:2px;
 	margin-left:0%;
 	margin-right:0%;
-	margin-top:20px;
+	margin-top:10px;
 	margin-bottom:10px;
 	background-color:#aaddcc;
+}
+.height100{
+	height:100%;
 }
 .photo{
 	width:100%;
@@ -147,4 +150,17 @@ html, body{
 .up-hide{
 	margin-top:40px;
 	margin-bottom:20px;
+}
+a:hover{
+	text-decoration:none;
+}
+.margin-fix-h{
+	margin-top:20px;
+	margin-bottom:10px;
+}
+.setting-item input{
+	width:80%;
+}
+.setting-item textarea{
+	width:80%;
 }

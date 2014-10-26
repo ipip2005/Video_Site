@@ -74,4 +74,14 @@ class UserController extends BaseController {
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
         $this->layout->main=View::make('user/settings')->with(compact('user','name'));
     }
+    public function postChangeSetting(){
+        $user = Auth::user();
+        $user->nickname = Input::get('nickname');
+        $password = Input::get('password');
+        if (!empty($password)) $user->password = Hash::make($password);
+        $user->email = Input::get('email');
+        $user->introduction = Input::get('introduction');
+        $user->save();
+        return Response::json(array('success'=>'1'));
+    }
 }
