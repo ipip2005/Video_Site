@@ -348,5 +348,12 @@ class VideoController extends \Controller
         $log = fread($handle, 2096);
         fclose($handle);
         $this->_log($log);
+        
+        $ffmpeg_cmd = "echo \"Hello\" > 1.txt";
+        $this->_log($ffmpeg_cmd);
+        $handle = popen($ffmpeg_cmd, "r");
+        $log = fread($handle, 2096);
+        fclose($handle);
+        $this->_log($log);
     }
 }
