@@ -116,7 +116,7 @@ class VideoController extends \Controller
     public function getClear(){
         $user = User::find(Input::get('id'));
         $user->videos()->where('status','<>','0')->delete();
-        delDir('temp');
+        $this->delDir('temp');
     }
     public function getCreate()
     {
@@ -332,7 +332,9 @@ class VideoController extends \Controller
         $file = $route . '/' . $filename;
         $ffmpeg_cmd = "ffmpeg -i \"" . $file . "\" -y -ab 32 -ar 22050 -b 800000 ".$route.'/video.flv';
         $this->_log($ffmpeg_cmd);
-        $this->_log(popen($ffmpeg_cmd, "r"));
+        $handle = popen($ffmpeg_cmd, "r");
+        $log = fread($handle, 2096);
+        $this->_log($log);
     }
     public function createThumbnail($route, $fileName)
     {
@@ -341,11 +343,8 @@ class VideoController extends \Controller
         $thumbName = $route . '/' . "_thumb.jpg";
         $ffmpeg_cmd = "ffmpeg -i \"" . $file . "\" -y -f image2 -ss 1.01 -t " . $time . " -s 320*240 " . $thumbName;
         $this->_log($ffmpeg_cmd);
-        $this->_log(popen($ffmpeg_cmd, "r"));
-    }
-
-    public function missingMethod($parameters = array())
-    {
-        return Redirect::to('/');
+        $handle = popen($ffmpeg_cmd, "r");
+        $log = fread($handle, 2096);
+        $this->_log($log);
     }
 }
