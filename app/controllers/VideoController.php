@@ -334,6 +334,7 @@ class VideoController extends \Controller
         $this->_log($ffmpeg_cmd);
         $handle = popen($ffmpeg_cmd, "r");
         $log = fread($handle, 2096);
+        fclose($handle);
         $this->_log($log);
     }
     public function createThumbnail($route, $fileName)
@@ -345,6 +346,7 @@ class VideoController extends \Controller
         $this->_log($ffmpeg_cmd);
         $handle = popen($ffmpeg_cmd, "r");
         $log = fread($handle, 2096);
+        fclose($handle);
         $this->_log($log);
     }
 }
