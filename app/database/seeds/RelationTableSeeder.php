@@ -9,7 +9,18 @@ class RelationTableSeeder extends Seeder
         // DB::table('user')->truncate();
 
         $relation = array(
-            'host' => 2,
+            'host' => 1,
+			'friend' => 2,
+			'group' => 1,
+			'created_at' => DB::raw('NOW()'),
+            'updated_at' => DB::raw('NOW()')
+        );
+
+        // Uncomment the below to run the seeder
+        DB::table('urelation')->insert($relation);
+		
+		$relation = array(
+            'host' => 1,
 			'friend' => 3,
 			'group' => 1,
 			'created_at' => DB::raw('NOW()'),
@@ -20,8 +31,8 @@ class RelationTableSeeder extends Seeder
         DB::table('urelation')->insert($relation);
 		
 		$relation = array(
-            'host' => 2,
-			'friend' => 4,
+            'host' => 1,
+			'friend' => 3,
 			'group' => 2,
 			'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()')
@@ -31,8 +42,8 @@ class RelationTableSeeder extends Seeder
         DB::table('urelation')->insert($relation);
 		
 		$relation = array(
-            'host' => 2,
-			'friend' => 5,
+            'host' => 1,
+			'friend' => 4,
 			'group' => 1,
 			'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()')
@@ -42,18 +53,7 @@ class RelationTableSeeder extends Seeder
         DB::table('urelation')->insert($relation);
 		
 		$relation = array(
-            'host' => 3,
-			'friend' => 2,
-			'group' => 3,
-			'created_at' => DB::raw('NOW()'),
-            'updated_at' => DB::raw('NOW()')
-        );
-
-        // Uncomment the below to run the seeder
-        DB::table('urelation')->insert($relation);
-		
-		$relation = array(
-            'host' => 3,
+            'host' => 1,
 			'friend' => 4,
 			'group' => 3,
 			'created_at' => DB::raw('NOW()'),
@@ -64,13 +64,35 @@ class RelationTableSeeder extends Seeder
         DB::table('urelation')->insert($relation);
 		
 		$relation = array(
-            'host' => 3,
-			'friend' => 6,
-			'group' => 3,
+            'host' => 1,
+			'friend' => 4,
+			'group' => 2,
 			'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()')
         );
 
+        // Uncomment the below to run the seeder
+        DB::table('urelation')->insert($relation);
+        
+        $relation = array(
+            'host' => 1,
+            'friend' => 5,
+            'group' => 1,
+            'created_at' => DB::raw('NOW()'),
+            'updated_at' => DB::raw('NOW()')
+        );
+        
+        // Uncomment the below to run the seeder
+        DB::table('urelation')->insert($relation);
+        
+        $relation = array(
+            'host' => 1,
+            'friend' => 6,
+            'group' => 1,
+            'created_at' => DB::raw('NOW()'),
+            'updated_at' => DB::raw('NOW()')
+        );
+        
         // Uncomment the below to run the seeder
         DB::table('urelation')->insert($relation);
     }

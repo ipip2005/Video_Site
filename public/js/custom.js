@@ -191,3 +191,25 @@ function upload_restart(){
 	$("#restart-button").attr({"id":"pause-button"});
 	r.upload();
 }
+
+function pay_attension(id){
+	$.ajax({url:"/user/friends/add-friend",type:'post',async:false,
+		data:{'fid':id},success:function(res){
+			if (res.success=='1')
+				$("#pay-button").attr('onclick','cancel_pay_attension('+id+')');
+				$("#pay-button i").toggleClass("icon-plus").toggleClass("icon-minus");
+				$("#pay-button b").html('取消关注');
+		}
+	});
+}
+function cancel_pay_attension(id){
+	if (!confirm("取消关注会删除所有已有的联系，确认？")) return;
+	$.ajax({url:"/user/friends/del-friend",type:'post',async:false,
+		data:{'fid':id},success:function(res){
+			if (res.success=='1')
+				$("#pay-button").attr('onclick','pay_attension('+id+')');
+				$("#pay-button i").toggleClass("icon-plus").toggleClass("icon-minus");
+				$("#pay-button b").html('关注');
+		}
+	});
+}

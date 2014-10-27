@@ -40,13 +40,14 @@
 						  $name = Auth::user()->nickname;
 						  if (mb_strlen($name)==0) $name=Auth::user()->username;
 						?>
-						<a href="/user/ihome" data-toggle="popover" data-placement="bottom" id="ihome"
-							data-trigger="hover" data-content="<?php echo$name?>"><span>
+						<a href="/user/ihome" data-toggle="tooltip" data-placement="bottom" id="ihome"
+							title="<?php echo$name?>"><span>
 						<i class="icon-user icon-x"></i>
 						<?php
 						  if (mb_strlen($name)>=12) $name = mb_substr($name, 0, 9, 'utf-8')."...";
 						  echo $name; 
 						?></span></a>
+						
 						<b>|</b>
 						<a href="/logout">退出</a>
 						@else 
@@ -130,7 +131,7 @@
 	            	  if (click_where==1) $("#register").popover("hide"); 
             		   if (click_where==2) $("#login").popover("hide");
 			  }
-			  $("#ihome").popover({html:false});
+			  $("#ihome").tooltip();
 			  $("#login").popover({html:true});
 			  $("#login").popover("show");
 			  $(document).click(function(e){hideot(e)});
@@ -146,7 +147,7 @@
 	@else
 	<script>
 		$(function () {
-			  $("#ihome").popover({html:false});
+			  $("#ihome").tooltip();
 			  $("#login").popover({html:true});
 			  $("#register").popover({html:true});
 			  $("[data-toggle='popover']").click(function(){

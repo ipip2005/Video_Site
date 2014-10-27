@@ -1,6 +1,14 @@
 <ul class="nav nav-tabs" id="myTab">
-	<li <?php if ($default_page=='podcast')echo 'class="active"'?>><a href="#Podcast" role="tab" data-toggle="tab">已发布视频</a></li>
-	<li <?php if ($default_page=='upload')echo 'class="active"'?>><a href="#Upload" role="tab" data-toggle="tab">上传视频</a></li>
+	<li <?php if ($default_page=='podcast')echo 'class="active"'?>>
+	   <a href="#Podcast" role="tab" data-toggle="tab">
+	       <i class="icon-facetime-video"></i> 已发布视频
+	   </a>
+	</li>
+	<li <?php if ($default_page=='upload')echo 'class="active"'?>>
+	   <a href="#Upload" role="tab" data-toggle="tab">
+	       <i class="icon-upload"></i> 上传视频
+	   </a>
+	</li>
 </ul>
 <div id="myTabContent" class="tab-content">
 	<div class="tab-pane fade in <?php if ($default_page=='podcast')echo "active"?>" id="Podcast">

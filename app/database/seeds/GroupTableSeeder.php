@@ -10,14 +10,14 @@ class GroupTableSeeder extends Seeder
 
         $group = array(
             'name' => 'default',
-	    'user_id' => '0',
+	        'user_id' => '0',
 			'created_at' => DB::raw('NOW()'),		
             'updated_at' => DB::raw('NOW()')
         );
-
+        DB::table('groups')->insert($group);
         $group = array(
             'name' => 'friends',
-	    'user_id' => '1',
+	        'user_id' => '1',
 			'created_at' => DB::raw('NOW()'),		
             'updated_at' => DB::raw('NOW()')
         );
@@ -37,7 +37,7 @@ class GroupTableSeeder extends Seeder
 		
 		$group = array(
             'name' => 'friends',
-	    'user_id' => '1',
+	    'user_id' => '2',
 			'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()')
         );

@@ -1,50 +1,217 @@
-﻿<ul class="nav nav-tabs" id="myTab">
-	<li class="active"><a href="#friends" role="tab" data-toggle="tab">我的好友</a></li>
-	<li><a href="#groups" role="tab" data-toggle="tab">我的分组</a></li>
-</ul>
-<div id="myTabContent" class="tab-content">
-	<div class="tab-pane fade in active" id="friends">
-		<div class="container-fluid margin-tb-10">
-		   <div class="row">
-		   @foreach($friends as $user)
-		      <div class="col-xs-3">
-		          <div class="row text-center">
-		              <img src="<?php echo $user->photoPath.'/photo.jpg'?>">
-		          </div>
-		          <div class="row text-center">
-		              <a href="/user?uid=<?php echo $user->id?>"><h4><?php if (empty($user->nickname)) 
-		                      echo $user->username; else echo $user->nickname;?></h4></a>
-		          </div>
-		      </div>   
-		   @endforeach
-		   </div>
-		</div>
+﻿<div class="row">
+	<div class="belt">
+		<h3>
+			<b class="soft-text"><i class="icon-th"></i> 好友管理</b>
+		</h3>
 	</div>
-	<div class="tab-pane fade in" id="groups">
-		<div class="container-fluid margin-tb-10">
+</div>
+<div class="row">
+	<hr class="divider">
+</div>
+<div class="row">
+	<div class="col-xs-3">
+		<div class="row">
+			<div class="col-xs-10">
+				<button class="btn-primary border-0" onclick="show_group(1)">
+					所有好友 <span class="badge">{{count(DB::table('urelation')->where('host','=',Auth::id())->
+						where('group','=','1')->get())}}</span>
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			<hr class="divider">
+		</div>
+		@foreach($groups as $group)
+
+		<div class="row">
+			<div class="col-xs-10">
+				<button class="btn-default border-0"
+					onclick="show_group(<?php echo $group->id?>)">
+					{{$group->name}} <span class="badge">{{count(DB::table('urelation')->where('host','=',Auth::id())->
+						where('group','=',$group->id)->get())}}</span>
+				</button>
+			</div>
+			<div class="col-xs-2">
+				<button class="btn-danger border-0"
+					onclick="delete_group(<?php echo $group->id?>)">X</button>
+			</div>
+		</div>
+		<div class="row">
+			<hr class="divider">
+		</div>
+		@endforeach
+		<div class="row">
+			<div class="col-xs-6">
+				<button class="btn-success border-0 up-button" id="add-group">添加</button>
+			</div>
+			<div class="col-xs-6">
+				<button class="btn-danger border-0 up-button" id="cancel-add-group">取消</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<input type="text" id="gname" class="margin-top-10"
+					placeholder="group-name">
+			</div>
+		</div>
+		<script>$("#gname").hide();$("#cancel-add-group").hide();</script>
+	</div>
+	<div class="col-xs-9" id="friend-blade">
+		<div class="container-fluid margin-tb-10" id="friend">
+			<div class="row">
+				@foreach($friends as $user)
+				<div class="col-xs-3">
+					<div class="row text-center">
+						<a href="/user?uid=<?php echo $user->id?>"> <img
+							src="<?php echo $user->photoPath.'/photo.jpg'?>">
+						</a>
+					</div>
+					<div class="row text-center">
+						<h4>
+							<a href="/user?uid=<?php echo $user->id?>"><?php
+    
+    if (empty($user->nickname))
+        echo $user->username;
+    else
+        echo $user->nickname;
+    ?></a>
+						</h4>
+					</div>
+					<div class="row text-center">
+
+						<a class="btn btn-default to-group" style="width: 90%"
+							href="javascript:modal_active(<?php echo $user->id?>);">
+					       <?php
+            $cato = DB::table('urelation')->where('host', '=', Auth::id())
+                ->where('group', '<>', '1')
+                ->where('friend', '=', $user->id)
+                ->get(array(
+                'group'
+            ));
+            if (count($cato) == 0)
+                echo "未分组";
+            else
+                for ($i = 0; $i < count($cato) && $i < 2; $i ++) {
+                    if ($i > 0)
+                        echo ' | ';
+                    echo DB::table('groups')->where('id', '=', $cato[$i]->group)->first()->name;
+                }
+            if (count($cato) > 2)
+                echo ' | ...';
+            ?>
+					   </a>
+					</div>
+				</div>
+				@endforeach
+			</div>
 		</div>
 	</div>
 </div>
 
-<form method="POST" action="friends/add-friend">
-	Friend ID: <input type="text" name="fid">
-	<input type="submit" name="submit" value="添加">
-</form>
-<form method="POST" action="friends/add-friend-to-group">
-	Friend ID: <input type="text" name="fid">
-	Group ID: <input type="text" name="gid">
-	<input type="submit" name="submit" value="添加">
-</form>
-<form method="POST" action="friends/add-group">
-	Group Name: <input type="text" name="gid">
-	<input type="submit" name="submit" value="添加">
-</form>
-<form method="POST" action="friends/del-friend-from-group">
-	Friend ID: <input type="text" name="fid">
-	Group ID: <input type="text" name="gid">
-	<input type="submit" name="submit" value="删除">
-</form>
-<form method="POST" action="friends/del-group">
-	Group Name: <input type="text" name="gid">
-	<input type="submit" name="submit" value="删除">
-</form>
+<div class="modal fade grouping" tabindex="-1" role="dialog" id="grouping"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+	    
+		<div class="modal-content">
+		  <div class="modal-header">
+	        <h1 class="modal-title"><b class="soft-text">选择该好友的分组</b></h1>
+	      </div>
+		  <div class="modal-body container-fluid">
+		      <div class="row" data-toggle="buttons">   
+		      @foreach($groups as $group)
+		          <div class="col-xs-3">
+	               <button id="sg-<?php echo $group->id?>" class="btn btn-default col-xs-3" style="width:100%"
+	                   onclick="switch_button('#sg-<?php echo $group->id?>')">
+	                  {{$group->name}}
+	               </button>
+	              </div>
+	          @endforeach
+		      </div>
+		      <div class="row">
+		          <hr class="divider">
+		      </div>
+		      <div class="row">
+		          <div class="col-xs-4 col-xs-offset-2 text-center">
+		              <button class="btn btn-primary" onclick="update_group()">提交</button>
+		          </div>
+		          <div class="col-xs-4 text-center">
+		              <button class="btn btn-danger" onclick="$('#grouping').modal('hide');">取消</button>
+		          </div>
+		      </div>
+		  </div>
+		</div>
+	</div>
+</div>
+<script>
+    var now = 1;
+    var fid;
+    $("#add-group").click(function(){add_group()});
+    $("#cancel-add-group").click(function(){cancel_add_group()});
+    function switch_button(bid){
+        $(bid).toggleClass("btn-default");
+        $(bid).toggleClass("btn-success");
+    }
+    function modal_active(id){
+        fid = id;
+        $("#grouping").modal("show");
+        $.ajax({url:"/user/friends/groups-of-friend",data:{'fid':id},type:'post',
+            success:function(res){
+                $.each(res,function(i,item){
+                    if (item=='1') {
+                        $("#sg-"+i).addClass("btn-success");
+                        $("#sg-"+i).removeClass("btn-default");
+                    } else{
+                        $("#sg-"+i).removeClass("btn-success");
+                        $("#sg-"+i).addClass("btn-default");
+                    }
+                });
+            }});
+        //$(".modal-body").
+    }
+    
+    function show_group(id){
+        if (id == now) return;
+        //alert(id);
+    }
+    function update_group(){
+        var data = '{';
+        $(".modal .btn-default").each(function(){
+            data+=('"'+$(this).attr("id").substring(3)+'":0,');
+        });
+        $(".modal .btn-success").each(function(){
+            data+=('"'+$(this).attr("id").substring(3)+'":1,');
+        })
+        if (data.charAt(data.length-1) == ',')
+            data = data.substring(0,data.length-1);
+        data+='}';
+        $.ajax({url:"/user/friends/update-group",type:"post",async:"false",
+            data:{"data":data,'fid':fid},success:function(){
+                location=location;
+            }
+            });
+    }
+    function delete_group(id){
+        if (!confirm("确定删除该组吗")) return;
+        $.ajax({url:"/user/friends/del-group",type:"get",data:{"gid":id},
+                success:function(){
+                    location=location;
+                }});
+    }
+    function add_group(){
+        var gname = $("#gname").val();
+        if (gname=="") {
+            $("#gname").show(500);
+            $("#cancel-add-group").show(500);
+        } else{
+        	$.ajax({url:"/user/friends/add-group",type:"get",data:{'gname':gname},
+                    success:function(){
+                        location=location;
+                    }});
+        }
+    }
+    function cancel_add_group(){
+        $("#gname").val("");
+        $("#gname").hide(500);
+        $("#cancel-add-group").hide(500);
+    }
+</script>

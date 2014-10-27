@@ -121,7 +121,8 @@ class VideoController extends \Controller
     public function getCreate()
     {
         $type = Input::get('file_type');
-        if ($type!='flv' && $type!='ogg'&& $type!='mp4') return Response::json(array('error'=>'not supported type'));
+        if ($type!='flv' && $type!='ogg'&& $type!='mp4'&& $type!='mov') 
+            return Response::json(array('error'=>'not supported type'));
         $user = Auth::user();
         if (Video::where('user_id', '=', $user->id)->where('status', '<>', '0')
             ->where('name', '=', Input::get('file_name'))

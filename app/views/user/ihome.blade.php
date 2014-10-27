@@ -20,17 +20,13 @@
 			    @endif
 			    @foreach($videos as $video)
 				<div class="col-xs-4">
-					<a href="/watch?vid=<?php echo $video->id?>">
-					   <img src="/video/<?php echo $video->id?>/_thumb.jpg" style="width: 100%; height: auto;" />
+					<a href="/watch?vid=<?php echo $video->id?>" class="row ">
+					   <img src="/video/<?php echo $video->id?>/_thumb.jpg" style="width: 100%; height: auto;"/>
 					</a>
-					<div>{{$video->name}}</div>
-					<div>播放量：{{$video->view_count}}</div>
+					<div class="row text-center margin-tb-0"><p class="soft-text margin-tb-0">{{$video->name}}</p></div>
+					<div class="row text-center margin-tb-0"><p class="soft-text margin-tb-0">播放量：{{$video->view_count}}</p></div>
 				</div>
 				@endforeach
-			</div>
-
-			<div class="row">
-				<div class="col-xs-12 divider img-rounded"></div>
 			</div>
 			<!--已分享Title-->
 			<div class="row clearfix margin-tb-10">
@@ -84,9 +80,6 @@
 					<div>Wild China</div>
 					<div>播放量：14万</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 divider img-rounded"></div>
 			</div>
 			<!--系统推荐Title-->
 			<div class="row clearfix margin-tb-10">
@@ -148,6 +141,17 @@
 					<div>
 						<img class="photo"
 							src="<?php echo $user->photoPath.'/photo.jpg'?>" />
+						@if(Auth::id()!=$user->id)
+						@if(DB::table('urelation')->where('host','=',Auth::id())->where('friend','=',$user->id)->count()==0)
+					    <div style="width:100%" class="text-center">
+					       <button class="btn-success border-0" onclick="pay_attension(<?php echo $user->id?>)" id="pay-button"><i class="icon-plus"></i> <b>关注</b></button>
+					    </div>
+					    @else
+					    <div style="width:100%" class="text-center">
+					       <button class="btn-success border-0" onclick="cancel_pay_attension(<?php echo $user->id?>)" id="pay-button"><i class="icon-minus"></i> <b>取消关注</b></button>
+					    </div>
+					    @endif
+					    @endif
 					</div>
 				</div>
 			</div>

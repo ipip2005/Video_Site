@@ -85,6 +85,10 @@ html, body{
 	margin-bottom:10px;
 	padding:2px;
 }
+.margin-tb-0{
+	margin-top:0;
+	margin-bottom:0;
+}
 #login+.popover,#register+.popover{
 	width:414px;
 }
@@ -167,8 +171,17 @@ a:hover{
 .intr-text{
 	text-indent: 2em;
 }
-#friends img{
+#friend img{
 	width:60%;
 	height:auto;
 	
+}
+#carousel-main-top{
+	height:300px;
+}
+#carousel-main-top img{
+	margin-left:auto;
+	margin-right:auto;
+	height:300px;
+	width:auto;
 }

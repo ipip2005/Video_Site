@@ -68,10 +68,11 @@ class UserController extends BaseController {
         foreach ($fids as $value){
             $friends->add(User::find($value->friend));
         }
+        $groups = DB::table('groups')->where('user_id','=',$user->id)->where('id','<>','1')->get();
         $active = 'friends';
         $this->layout->title="My Home-Friends";
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
-        $this->layout->main=View::make('user/friends')->with(compact('user','friends'));
+        $this->layout->main=View::make('user/friends')->with(compact('user','friends','groups'));
     }
     public function getSettings(){
         $user = Auth::user();

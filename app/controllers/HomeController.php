@@ -30,8 +30,9 @@ class HomeController extends BaseController {
         ] );
     }
     public function getIndex(){
+        $videos = Video::where('status','=','0')->orderBy('publishTime','Desc')->take(12)->get();
         $this->layout->title="FduVideoSite";
-        $this->layout->main=View::make('home');
+        $this->layout->main=View::make('home')->with(compact('videos'));
     }
     public function getWatch(){
         $video = Video::find(Input::get("vid"));

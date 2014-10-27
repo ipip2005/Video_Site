@@ -67,5 +67,29 @@ class User2TableSeeder extends Seeder
 
         // Uncomment the below to run the seeder
         DB::table('users')->insert($user);
+        
+        $user = array(
+            'username' => 'ipip2005',
+            'nickName' => 'YLL',
+            'password' => Hash::make('62680044'),
+            'email' => '11300240052@fudan.edu.cn',
+            'created_at' => DB::raw('NOW()'),
+            'updated_at' => DB::raw('NOW()'),
+        );
+        
+        // Uncomment the below to run the seeder
+        DB::table('users')->insert($user);
+        
+        $user = array(
+            'username' => 'rainboy',
+            'nickName' => 'Rainboy',
+            'password' => Hash::make('rainboy'),
+            'email' => 'rainboy@126.com',
+            'created_at' => DB::raw('NOW()'),
+            'updated_at' => DB::raw('NOW()'),
+        );
+        
+        // Uncomment the below to run the seeder
+        DB::table('users')->insert($user);
     }
 }
