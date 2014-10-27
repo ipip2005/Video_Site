@@ -340,7 +340,8 @@ class VideoController extends \Controller
         $time = 0.001;
         $thumbName = $route . '/' . "_thumb.jpg";
         $ffmpeg_cmd = "ffmpeg -i \"" . $file . "\" -y -f image2 -ss 1.01 -t " . $time . " -s 320*240 " . $thumbName;
-        passthru($ffmpeg_cmd, $log);
+        $this->_log($ffmpeg_cmd);
+        $this->_log(popen($ffmpeg_cmd, "r"));
     }
 
     public function missingMethod($parameters = array())
