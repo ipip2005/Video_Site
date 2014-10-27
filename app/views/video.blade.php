@@ -37,32 +37,7 @@
 				    <button class="btn btn-primary ">评论</button>
 				</div>
 			</div>
-			<div style="height:50px"></div>
-			<div>
-				<div class="row">
-					<div class="col-md-3 text-center"><img style="width:80%" alt="140x140" src="/i/qvod.jpg" class="img-rounded"/></div>
-					<div class="col-md-9"><div><a href="baidu.com">ipip</a></div>好好看啊好好看！</div><br/><div>30分钟前</div>
-				</div>
-				————————————————————————————————————————————————————
-				<div class="row">
-					<div class="col-md-3 text-center"><img style="width:80%" alt="140x140" src="/i/qvod.jpg" class="img-rounded"/></div>
-					<div class="col-md-9"><div><a href="baidu.com">ipip</a></div>我来看看</div><br/><div>50分钟前</div>
-				</div>
-				————————————————————————————————————————————————————
-			</div>
-		</div>
-		<div class="col-md-4">
-			为您推荐：
-			<div class="row">
-				<div class="col-md-4 text-center"><img style="width:80%" alt="140x140" src="/i/qvod.jpg" class="img-rounded"/></div>
-				<div class="col-md-8"><div><a href="baidu.com">快播1</a></div></div>
-			</div>
-			————————————————————————————————————————————————————
-			<div class="row">
-				<div class="col-md-4 text-center"><img style="width:80%" alt="140x140" src="/i/qvod.jpg" class="img-rounded"/></div>
-				<div class="col-md-8"><div><a href="baidu.com">快播2</a></div></div><br/>
-			</div>
-			————————————————————————————————————————————————————
+			
 		</div>
 	</div>
 	</div>

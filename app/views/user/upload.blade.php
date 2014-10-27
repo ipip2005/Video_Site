@@ -199,7 +199,7 @@ r.on('cancel', function(){
 					</div>
 			    </div>
 			</div>
-			<script>$("#error-message" p).hide()</script>
+			<script>$("#error-message p").hide()</script>
 		</div>
 	</div>
 </div>

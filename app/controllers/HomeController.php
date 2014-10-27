@@ -36,8 +36,9 @@ class HomeController extends BaseController {
     }
     public function getWatch(){
         $video = Video::find(Input::get("vid"));
+        $comments = $video->comments();
         $this->layout->title="video";//video_name;
-        $this->layout->main=View::make('video')->with(compact('video'));
+        $this->layout->main=View::make('video')->with(compact('video','comments'));
     }
     public function getLogout(){
         Auth::Logout();

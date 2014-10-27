@@ -21,7 +21,6 @@ function login(){
 		return;
 	}
 	$.ajax({ url:"/login", async:"false", type:"POST", data:{"account":account,"password":password},
-		dataTpye:'json',
 		success:function(response){
 			var res = response.response;
 			if (res=="ok")history.go(0); else{
