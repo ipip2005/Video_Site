@@ -43,6 +43,7 @@
 	</div>
 </div>
 <div class="row">
+    @if (count($videos)>0)
 	<div class="col-xs-4">
 		<a href="/watch?vid=<?php echo $videos[0]->id?>" class="row"> <img
 			src="/video/<?php echo $videos[0]->id?>/_thumb.jpg"
@@ -55,6 +56,7 @@
 			<p class="soft-text">播放量：{{$videos[0]->view_count}}</p>
 		</div>
 	</div>
+	
 	@for($i = 1; $i <= 4; $i++)
 	<div class="col-xs-2">
 		<div class="row margin-tb-0 text-center">
@@ -78,4 +80,5 @@
 		</div>
 	</div>
 	@endfor
+	@endif
 </div>
