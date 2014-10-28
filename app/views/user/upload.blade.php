@@ -10,20 +10,20 @@
 	   </a>
 	</li>
 </ul>
-<div id="myTabContent" class="tab-content">
+<div class="tab-content">
 	<div class="tab-pane fade in <?php if ($default_page=='podcast')echo "active"?>" id="Podcast">
 		<div class="container-fluid margin-tb-10">
 		    <?php $first=false?>
-		    @foreach(Auth::user()->videos()->orderBy('publishTime','Desc')->get() as $video)
+		    @foreach($videos as $video)
 		    @if($first)
-		    <div class="divider">
+		    <div class="row"><hr class="divider" id="divider-<?php echo $video->id?>">
 		    </div>
 		    @else
 		    <?php $first=true?>
 		    @endif
 			<div class="row clearfix margin-tb-10" id="video-<?php echo $video->id?>">
 				<a class="col-md-3" href="/watch?vid=<?php echo $video->id?>">
-					<img src="<?php echo '/video/'.$video->id.'/_thumb.jpg'?>" style="width: 100%; height: auto;">
+					<img src="<?php echo '/video/'.$video->id.'/_thumb.jpg'?>" alt="缩略图正在制作中" style="width: 100%; height: auto;">
 				</a>
 				<div class="col-md-8 text-left">
 					<div class="row clearfix">
@@ -97,20 +97,23 @@ var r = new Resumable({
   target:'/video/upload',
   query:{user_id:'<?php echo $user->id?>'}
 });
-  
+var fname="";
 r.assignBrowse(document.getElementById('browseButton'));
 
 r.on('fileSuccess', function(file){
+	now = 100;
+	$(".progress-bar").attr({"aria-valuenow":now,"style":"width: "+now+"%"});
+	$(".progress-bar span").html(""+now+"% Complete");
     console.debug(file);
   });
 r.on('fileProgress', function(file){
     console.debug(file);
   }); 
 r.on('fileAdded', function(file, event){
-	name = file.name||file.fileName;
-	var fileName = name.split('.');
+	fname = file.name||file.fileName;
+	var fileName = fname.split('.');
     var type = fileName[fileName.length-1].toLowerCase();
-	$.ajax({ url:"/video/create", async:"false", type:"GET", data:{"file_name":name,'file_type':type},
+	$.ajax({ url:"/video/create", async:"false", type:"GET", data:{"file_name":fname,'file_type':type},
 		dataTpye:'json',
 		success:function(response){
 			if (response.error=="have unuploaded video")
@@ -129,7 +132,8 @@ r.on('fileAdded', function(file, event){
 			    $("#browseButton").show();
 			    return;
 			}
-			r.upload();
+			if (response.success=="new" || response.success=="continue")
+				r.upload();
 		},
 	});
     //console.debug(file, event);
@@ -149,6 +153,7 @@ r.on('uploadStart', function(file){
     $("#browseButton").hide(500);
   });
 r.on('complete', function(){
+	
     //console.debug();
   });
 r.on('progress', function(){

@@ -33,7 +33,7 @@ class VideoController extends \Controller {
 	public function postChangeName() {
 		$name = Input::get ( "name" );
 		$id = Input::get ( "id" );
-		if (Video::find ( $id )->user_id == Auth::id ()) { // 请求更改的视频是自己的视频才更改，防止篡改
+		if (Video::find ( $id )->user_id == Auth::id () || Auth::user()->priviledge==0) { // 请求更改的视频是自己的视频才更改，防止篡改
 			$video = Video::find ( $id );
 			$video->name = $name;
 			$video->save ();
@@ -49,7 +49,7 @@ class VideoController extends \Controller {
 	public function postChangeIntr() {
 		$intr = Input::get ( "intr" );
 		$id = Input::get ( "id" );
-		if (Video::find ( $id )->user_id == Auth::id ()) { // 请求更改的视频是自己的视频才更改，防止篡改
+		if (Video::find ( $id )->user_id == Auth::id () || Auth::user()->priviledge==0) { // 请求更改的视频是自己的视频才更改，防止篡改
 			$video = Video::find ( $id );
 			$video->introduction = $intr;
 			$video->save ();
@@ -64,6 +64,7 @@ class VideoController extends \Controller {
 	}
 	public function deldir($dir) {
 		// 先删除目录下的文件：
+		if (!file_exists($dir)) return;
 		$dh = opendir ( $dir );
 		while ( $file = readdir ( $dh ) ) {
 			if ($file != "." && $file != "..") {
@@ -92,7 +93,7 @@ class VideoController extends \Controller {
 		if (Video::find ( $id )->user_id == Auth::id ()) {
 			$video = Video::find ( $id );
 			$this->deldir ( "video/" . $video->id );
-			$DB::table ( 'videorelation' )->where ( 'video_id', '=', $video->id )->delete ();
+			DB::table ( 'videorelation' )->where ( 'video_id', '=', $video->id )->delete ();
 			$video->delete ();
 			return Response::json ( array (
 					"success" => "ok" 
@@ -108,7 +109,9 @@ class VideoController extends \Controller {
 	 */
 	public function getClear() {
 		$user = User::find ( Input::get ( 'id' ) );
-		$user->videos ()->where ( 'status', '<>', '0' )->delete ();
+		$videos = $user->videos ()->where ( 'status', '<>', '0' )->get();
+		foreach($videos as $video) $this->delDir('video/'.$video->id);
+		$user->videos ()->where ( 'status', '<>', '0' )->delete();
 		$this->delDir ( 'temp' );
 	}
 	/**
@@ -150,9 +153,18 @@ class VideoController extends \Controller {
 		$video->status = 0;
 		$video->publishTime = date ( "Y-m-d H:i:s", time () );
 		$video->save ();
+		
 		return Response::json ( array (
-				'success' => 'published' 
+				'success' => 'published',
+				'id'=> $video->id
 		) );
+	}
+	public function postMake(){
+		$route = 'video/'. Input::get('id');
+		$fileName = Input::get('filename');
+		$this->createThumbnail ( $route, $fileName );
+		$this->translate ( $route, $fileName );
+		return Response::json(array('success'=>'1'));
 	}
 	/**
 	 * 获得视频的分组情况
@@ -249,7 +261,6 @@ class VideoController extends \Controller {
 		
 		// log to the output
 		$log_str = date ( 'd.m.Y' ) . ": {$str}\r\n";
-		echo $log_str;
 		
 		// log to file
 		if (($fp = fopen ( 'upload_log.txt', 'a+' )) !== false) {
@@ -334,8 +345,7 @@ class VideoController extends \Controller {
 						'status' => '2',
 						'path' => $route . '/video.flv' 
 				) );
-				$this->createThumbnail ( $route, $fileName );
-				$this->translate ( $route, $fileName );
+				
 			} else {
 				$this->_log ( 'cannot create the destination file' );
 				return false;
@@ -354,11 +364,7 @@ class VideoController extends \Controller {
 		$file = $route . '/' . $filename;
 		$ffmpeg_cmd = "ffmpeg -i \"" . $file . "\" -y -ab 32 -ar 22050 -b 800000 " . $route . '/video.flv';
 		$this->_log ( $ffmpeg_cmd );
-		$handle = popen ( $ffmpeg_cmd, "r" );
-		$this->_log ( "'$handle'; " . gettype ( $handle ) . "\n" );
-		$read = fread ( $handle, 2096 );
-		$this->_log ( $read );
-		pclose ( $handle );
+	    pclose(popen ( $ffmpeg_cmd, "r" ));
 	}
 	public function createThumbnail($route, $fileName) {
 		$file = $route . '/' . $fileName;
@@ -366,10 +372,6 @@ class VideoController extends \Controller {
 		$thumbName = $route . '/' . "_thumb.jpg";
 		$ffmpeg_cmd = "ffmpeg -i \"" . $file . "\" -y -f image2 -ss 1.01 -t " . $time . " -s 320*240 " . $thumbName;
 		$this->_log ( $ffmpeg_cmd );
-		$handle = popen ( $ffmpeg_cmd, "r" );
-		$this->_log ( "'$handle'; " . gettype ( $handle ) . "\n" );
-		$read = fread ( $handle, 2096 );
-		$this->_log ( $read );
-		pclose ( $handle );
+		pclose(popen ( $ffmpeg_cmd, "r" ));
 	}
 }

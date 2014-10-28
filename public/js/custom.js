@@ -93,8 +93,8 @@ function publish(){
 		return;
 	}
 	$.ajax({ url:"/video/publish", async:"false", type:"POST", data:{"name":name,"introduction":introduction},
-		dataTpye:'json',
-		success:function(response){
+		success:function(res){
+			$.ajax({ url:"/video/make", async:"true", type:"post", data:{"filename":fname, "id":res.id}});
 			window.location.href="/user/podcast";
 		},
 	});
@@ -103,6 +103,7 @@ function delete_video(id){
 	if (!confirm("确认删除吗")) return;
 	$.ajax({ url:"/video/delete", async:"false", type:"POST", data:{"id":id}});
 	$("#video-"+id).hide(500,function(){this.remove()});
+	$("#divider-"+id).hide(500,function(){this.remove()});
 }
 function edit_name(id){
 	$(".edit .edit-"+id).hide(200);
@@ -232,4 +233,9 @@ function get_json_from_modal(){
         data = data.substring(0,data.length-1);
     data+='}';
     return data;
+}
+function add_reply(uid, name){
+	reply_to = uid;
+	$("#comment-input span").html("@"+name);
+	return;
 }

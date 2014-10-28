@@ -27,9 +27,10 @@
 					<hr class="divider">
 				</div>
 				<div class="row">
-					@if($comment->tid>0) <a>@{{User::find($comment->tid)->nickname}}</a>
+					@if($comment->tid>0) <a href="/user?uid=<?php echo $comment->tid?>">{{'@'.User::find($comment->tid)->nickname}}</a>
 					@endif
-					<p class="intr-text">{{$comment->comment}}</p>
+					<p class="intr-text">{{$comment->comment}}
+						<a class="btn-primary border-0" href="javascript:add_reply(<?php echo $comment->user_id.',\''.User::find($comment->user_id)->nickname?>')"><span>回复TA</span></a></p>
 				</div>
 			</div>
 		</div>

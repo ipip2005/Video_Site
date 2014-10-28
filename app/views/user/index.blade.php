@@ -17,6 +17,11 @@
                 <li class="col-xs-2 text-center <?php if($active=="settings") echo "active"?>" id="settings">
                     <a href="/user/settings"><i class="icon-cog"></i> 个人设置</a>
                 </li>
+                @if(Auth::user()->priviledge==0)
+                <li class="col-xs-2 text-center <?php if($active=="panel") echo "active"?>" id="panel">
+                    <a href="/user/panel"><i class="icon-dashboard"></i> 控制面板</a>
+                </li>
+                @endif
             </ul>
         </div>
     </div>

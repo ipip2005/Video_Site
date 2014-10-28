@@ -32,7 +32,7 @@ class UserController extends BaseController {
     public function getIhome(){
         $user = Auth::user();
         $name = $user->nickname;
-        $videos = Video::where('user_id','=',$user->id)->orderBy('publishTime','desc')
+        $videos = Video::where('user_id','=',$user->id)->where('status','=','0')->orderBy('publishTime','desc')
             ->take(9)->get();
         $active = 'ihome';
         if (empty($name)) $name = $user->username;
@@ -44,21 +44,23 @@ class UserController extends BaseController {
         $user = Auth::user();
         $name = $user->nickname;
         $active = 'upload';
+        $videos = $user->videos()->where('status','=','0')->orderBy('publishTime','Desc')->get();
         if (empty($name)) $name = $user->username;
         $this->layout->title="My Home-Video";
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
         $default_page = 'podcast';
-        $this->layout->main=View::make('user/upload')->with(compact('user','name','default_page'));
+        $this->layout->main=View::make('user/upload')->with(compact('user','name','default_page','videos'));
     }
     public function getUpload(){
         $user = Auth::user();
         $name = $user->nickname;
         $active = 'upload';
+        $videos = $user->videos()->where('status','=','0')->orderBy('publishTime','Desc')->get();
         if (empty($name)) $name = $user->username;
         $this->layout->title="My Home-Video";
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
         $default_page = 'upload';
-        $this->layout->main=View::make('user/upload')->with(compact('user','name','default_page'));
+        $this->layout->main=View::make('user/upload')->with(compact('user','name','default_page','videos'));
     }
     public function getFriends(){
         $user = Auth::user();
@@ -79,7 +81,14 @@ class UserController extends BaseController {
         $active = 'settings';
         $this->layout->title="My Home-Setting";
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
-        $this->layout->main=View::make('user/settings')->with(compact('user','name'));
+        $this->layout->main=View::make('user/settings')->with(compact('user'));
+    }
+    public function getPanel(){
+    	$user = Auth::user();
+        $active = 'panel';
+        $this->layout->title="My Home-Dashboard";
+        $this->layout->user_nav=View::make('user/index')->with(compact('active'));
+        $this->layout->main=View::make('user/panel')->with(compact('user'));
     }
     public function postChangeSetting(){
         $user = Auth::user();
