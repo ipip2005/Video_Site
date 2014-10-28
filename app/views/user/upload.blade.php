@@ -27,8 +27,8 @@
 				</a>
 				<div class="col-md-8 text-left">
 					<div class="row clearfix">
-						<div class="col-md-3"><p>视频名称：</p></div>
-						<div class="col-md-6 soft-text editx" id="edit-name-<?php echo $video->id?>"><p>{{$video->name}}</p><input type="text"></div>
+						<div class="col-md-2"><p>视频名称：</p></div>
+						<div class="col-md-7 soft-text editx" id="edit-name-<?php echo $video->id?>"><p>{{$video->name}}</p><input type="text"></div>
 						<div class="col-md-3 edit">
 						    <button class="btn-success border-0 edit-<?php echo $video->id?>" onclick="edit_name(<?php echo $video->id?>)"><i class="icon-edit"> </i>编辑</button>
 						    <button class="btn-success border-0 xedit-<?php echo $video->id?>"onclick="save_edit_name(<?php echo $video->id?>)"><i class="icon-edit"> </i>保存</button>
@@ -37,8 +37,8 @@
 						<script>$(".edit .xedit-<?php echo $video->id?>").hide()</script>
 					</div>
 					<div class="row clearfix margin-top-10">
-						<div class="col-md-3"><p>视频简介：</p></div>
-						<div class="col-md-6 soft-text editx" id="edit2-intr-<?php echo $video->id?>"><p>{{$video->introduction}}</p><textarea rows="3" style="width:100%"></textarea></div>
+						<div class="col-md-2"><p>视频简介：</p></div>
+						<div class="col-md-7 soft-text editx" id="edit2-intr-<?php echo $video->id?>"><p>{{$video->introduction}}</p><textarea rows="3" style="width:100%"></textarea></div>
 						<div class="col-md-3 edit2">
 						    <button class="btn-success border-0 edit2-<?php echo $video->id?>" onclick="edit_intr(<?php echo $video->id?>)"><i class="icon-edit"> </i>编辑</button>
 						    <button class="btn-success border-0 xedit2-<?php echo $video->id?>"onclick="save_edit_intr(<?php echo $video->id?>)"><i class="icon-edit"> </i>保存</button>
@@ -61,13 +61,18 @@
 					   <div class="col-md-2 soft-text">{{count($video->comments)}}</div>					   
 					</div>
 					<div class="row clearfix margin-top-10">
-					   <div class="col-md-3"><p>发布日期：</p></div>
+					   <div class="col-md-2"><p>发布日期：</p></div>
 					   <div class="col-md-3 soft-text">{{$video->publishTime}}</div>	
-					   <div class="col-md-3">
-					   	   <button class="btn-primary border-0">
+					   <div class="col-md-4 text-center">
+					   	   <button class="btn-primary border-0" onclick="manage_group(<?php echo $video->id;?>)">
 					   	   	   <i class="icon-th"></i> 管理分组
 					   	   </button>
+					   	   <span class="soft-text"><?php
+					   	   	   if (DB::table('videorelation')->where('video_id','=',$video->id)->count()>0) echo "分组内可见"; else
+					   	   	   	 echo "所有用户可见"; 
+					   	   ?></span>
 					   </div>
+					   
 					   <div class="col-md-3">
 					       <button class="btn-danger border-0" onclick="javascript:delete_video(<?php echo $video->id?>)">
 			                   <i class="icon-trash"></i> 删除
@@ -211,3 +216,32 @@ r.on('cancel', function(){
 		</div>
 	</div>
 </div>
+@include('blades/grouping_dialog');
+<script>
+var vid = 1;
+function manage_group(id){
+	vid = id;
+	$("#grouping #group-buttons button").removeClass('btn-success').addClass('btn-default');
+	$("#grouping").modal("show");
+	$.ajax({url:"/video/groups",data:{'vid':id},type:'post',
+        success:function(res){
+            $.each(res,function(i,item){
+                if (item=='1') {
+                    $("#sg-"+i).addClass("btn-success");
+                    $("#sg-"+i).removeClass("btn-default");
+                } else{
+                    $("#sg-"+i).removeClass("btn-success");
+                    $("#sg-"+i).addClass("btn-default");
+                }
+            });
+        }});
+}
+function update_group(){
+	var data = get_json_from_modal();
+	$.ajax({url:"/video/update-group",type:"post",async:"false",
+        data:{"data":data,'vid':vid},success:function(){
+            location=location;
+        }
+        });
+}
+</script>

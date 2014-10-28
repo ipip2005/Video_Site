@@ -215,3 +215,21 @@ function cancel_pay_attension(id){
 function refresh_comments(vid){
 	$("#blade-comments").load("comment/blade",{'vid': vid});
 }
+
+function switch_button(bid){
+    $(bid).toggleClass("btn-default");
+    $(bid).toggleClass("btn-success");
+}
+function get_json_from_modal(){
+	var data = '{';
+    $(".modal .btn-default").each(function(){
+        data+=('"'+$(this).attr("id").substring(3)+'":0,');
+    });
+    $(".modal .btn-success").each(function(){
+        data+=('"'+$(this).attr("id").substring(3)+'":1,');
+    })
+    if (data.charAt(data.length-1) == ',')
+        data = data.substring(0,data.length-1);
+    data+='}';
+    return data;
+}

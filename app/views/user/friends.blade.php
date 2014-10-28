@@ -107,50 +107,13 @@
 		</div>
 	</div>
 </div>
-
-<div class="modal fade grouping" tabindex="-1" role="dialog" id="grouping"
-	aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-md">
-	    
-		<div class="modal-content">
-		  <div class="modal-header">
-	        <h1 class="modal-title"><b class="soft-text">选择该好友的分组</b></h1>
-	      </div>
-		  <div class="modal-body container-fluid">
-		      <div class="row" data-toggle="buttons">   
-		      @foreach($groups as $group)
-		          <div class="col-xs-3">
-	               <button id="sg-<?php echo $group->id?>" class="btn btn-default col-xs-3" style="width:100%"
-	                   onclick="switch_button('#sg-<?php echo $group->id?>')">
-	                  {{$group->name}}
-	               </button>
-	              </div>
-	          @endforeach
-		      </div>
-		      <div class="row">
-		          <hr class="divider">
-		      </div>
-		      <div class="row">
-		          <div class="col-xs-4 col-xs-offset-2 text-center">
-		              <button class="btn btn-primary" onclick="update_group()">提交</button>
-		          </div>
-		          <div class="col-xs-4 text-center">
-		              <button class="btn btn-danger" onclick="$('#grouping').modal('hide');">取消</button>
-		          </div>
-		      </div>
-		  </div>
-		</div>
-	</div>
-</div>
+@include('blades/grouping_dialog');
 <script>
     var now = 1;
     var fid;
     $("#add-group").click(function(){add_group()});
     $("#cancel-add-group").click(function(){cancel_add_group()});
-    function switch_button(bid){
-        $(bid).toggleClass("btn-default");
-        $(bid).toggleClass("btn-success");
-    }
+    
     function modal_active(id){
         fid = id;
         $("#grouping").modal("show");
@@ -174,16 +137,7 @@
         //alert(id);
     }
     function update_group(){
-        var data = '{';
-        $(".modal .btn-default").each(function(){
-            data+=('"'+$(this).attr("id").substring(3)+'":0,');
-        });
-        $(".modal .btn-success").each(function(){
-            data+=('"'+$(this).attr("id").substring(3)+'":1,');
-        })
-        if (data.charAt(data.length-1) == ',')
-            data = data.substring(0,data.length-1);
-        data+='}';
+        var data = get_json_from_modal();
         $.ajax({url:"/user/friends/update-group",type:"post",async:"false",
             data:{"data":data,'fid':fid},success:function(){
                 location=location;

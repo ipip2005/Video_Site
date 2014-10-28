@@ -35,9 +35,29 @@ class HomeController extends BaseController {
         $this->layout->main=View::make('home')->with(compact('videos'));
     }
     public function getWatch(){
+    	$this->layout->title="video";//video_name;
         $video = Video::find(Input::get("vid"));
+        $id = Auth::id();
+        if ($id != $video->user_id){
+        	$flag = false;
+        	if (DB::table('videorelation')->where('video_id','=',$video->id)->count()==0){
+        		$flag = true;
+        	} else
+        	foreach(DB::table('videorelation')->where('video_id','=',$video->id)->get() as $relation){
+        		$gid = $relation->group_id;
+        		if (DB::table('urelation')->where('host','=',$video->user_id)->where('friend','=',$id)
+        			->where('group','=',$gid)->count()>0){
+        			$flag = true;
+        			break;
+        		}
+        	}
+        	if (!$flag) {
+        		$this->layout->main=View::make('no_permission')->with(compact('video'));
+        		return;
+        	}
+        }
         $comments = $video->comments()->orderBy('created_at','desc')->get();
-        $this->layout->title="video";//video_name;
+        
         $this->layout->main=View::make('video')->with(compact('video','comments'));
     }
     public function getLogout(){

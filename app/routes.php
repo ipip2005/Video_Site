@@ -41,4 +41,7 @@ Route::controller('/video', 'VideoController');
 Route::controller('/user/friends', 'FriendsController');
 Route::controller('/user', 'UserController');
 Route::controller('/', 'HomeController');
-
+View::composer('blades/grouping_dialog', function($view) {
+	$groups = DB::table('groups')->where('user_id','=',Auth::id())->where('id','<>','1')->get();
+	$view->groups = $groups;
+});

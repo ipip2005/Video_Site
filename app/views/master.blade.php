@@ -65,9 +65,10 @@
 							<div class='text-center'>
 								<button type='button' class='btn btn-primary' onclick='login()'>登录</button>
 							</div>
-					        <div class='text-center' id='error-message' style='display:none'>
+					        <div class='text-center' id='error-message'>
 					           <p class='text-danger'></p>
 					        </div>
+					        <script>$('#error-message p').hide();</script>
 					   </div>
 					       ">
 					       <span>登陆</span>
@@ -96,9 +97,10 @@
 							<div class='text-center'>
 								<button type='button' class='btn btn-primary' onclick='register()'>注册</button>
 							</div>
-					        <div class='text-center' id='error-message' style='display:none'>
+					        <div class='text-center' id='error-message'>
 					           <p class='text-danger'></p>
 					        </div>
+					        <script>$('#error-message p').hide();</script>
 					   </div>
 					       ">
 					       <span>注册</span>
