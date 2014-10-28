@@ -121,7 +121,7 @@ class VideoController extends \Controller
     public function getCreate()
     {
         $type = Input::get('file_type');
-        if ($type!='flv' && $type!='ogg'&& $type!='mp4'&& $type!='mov') 
+        if ($type!='flv' && $type!='ogg'&& $type!='mp4'&& $type!='mov' && $type!='wmv' && $type!='mpeg') 
             return Response::json(array('error'=>'not supported type'));
         $user = Auth::user();
         if (Video::where('user_id', '=', $user->id)->where('status', '<>', '0')
@@ -299,6 +299,7 @@ class VideoController extends \Controller
             foreach (Video::where('user_id', '=', Auth::id())->where('status', '<>', '0')->get() as $video) {
                 $vid = $video->id;
             }
+            mkdir('video');
             mkdir('video/' . $vid);
             $route = 'video/' . $vid;
             // create the final destination file

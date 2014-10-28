@@ -4,7 +4,7 @@
         </h1>    
     </div>
     <div class="col-xs-6 text-right">
-        <h2 class="soft-text"><i class="icon-cog"></i>Settings</h2>
+        <h2 class="soft-text"><i class="icon-cog"></i> Settings</h2>
     </div>
 </div>
 <div class="row">

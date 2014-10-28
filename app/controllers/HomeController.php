@@ -36,7 +36,7 @@ class HomeController extends BaseController {
     }
     public function getWatch(){
         $video = Video::find(Input::get("vid"));
-        $comments = $video->comments();
+        $comments = $video->comments()->orderBy('created_at','desc')->get();
         $this->layout->title="video";//video_name;
         $this->layout->main=View::make('video')->with(compact('video','comments'));
     }

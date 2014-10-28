@@ -31,13 +31,41 @@
 	</div>
 	<div class="row">
 		<div class="col-md-8">
-			<div class="input-group">
-				<input type="text"	class="form-control search-content" placeholder="有什么想说的吗？快来评论吧！">
+			<div class="input-group" id="comment-input">
+				<input type="text"	class="form-control" placeholder="有什么想说的吗？快来评论吧！">
 				<div class="input-group-btn">
-				    <button class="btn btn-primary ">评论</button>
+				    <button class="btn btn-primary " type="button">评论</button>
 				</div>
 			</div>
-			
 		</div>
 	</div>
+	<script>
+	$("#comment-input button").click(function(){
+		var text = $("#comment-input input").val();
+		if (text.length>300) {
+			alert('内容过长,300字数限制');
+			return;
+		}
+		if (text.length==0){
+			alert('请输入评论内容');
+			return;
+		}
+	    $.ajax({url:'/comment/add-comment',type:'post',async:'false',data:{
+		    'vid':'<?php echo $video->id?>',
+		    'tid':'0',
+		    'comment':text},success:function(res){
+			    	if (res.success=='1'){
+						refresh_comments(<?php echo $video->id?>);				    	
+			    	} else alert("评论失败，请重试");
+		    	},error:function(XMLHttpRequest){
+			    	if (XMLHttpRequest.status=="401"){
+			    		$("#login").get(0).click();
+			    	}
+		    	}
+	    	});
+		});
+	</script>
+	<div id="blade-comments">
+		@include('blades/comments')
 	</div>
+</div>

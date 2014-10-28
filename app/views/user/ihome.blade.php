@@ -24,7 +24,9 @@
 					   <img src="/video/<?php echo $video->id?>/_thumb.jpg" style="width: 100%; height: auto;"/>
 					</a>
 					<div class="row text-center margin-tb-0"><p class="soft-text margin-tb-0">{{$video->name}}</p></div>
-					<div class="row text-center margin-tb-0"><p class="soft-text margin-tb-0">播放量：{{$video->view_count}}</p></div>
+					<div class="row text-center margin-tb-0">
+						<span class="soft-text margin-tb-0">播放量:{{$video->view_count}}</span>
+						<span class="soft-text margin-tb-0">&nbsp&nbsp评论:{{count($video->comments)}}条</span></div>
 				</div>
 				@endforeach
 			</div>

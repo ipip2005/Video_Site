@@ -48,23 +48,31 @@
 						        $("#edit2-intr-<?php echo $video->id?> textarea").hide();</script>
 					</div>
 					<script>$(".editx input").hide()</script>
+					
+					<div class="row clearfix margin-top-10">
+					   <div class="col-md-2"><p>点击数:</p></div>
+					   <div class="col-md-2 soft-text">{{$video->view_count}}</div>
+					   <div class="col-md-2"><p>评分:</p></div>
+					   <div class="col-md-2 soft-text">
+					       <?php if ($video->score_count==0) echo"暂无打分"; else
+					           echo $video->score/$video->score_count;?>
+					   </div>	
+					   <div class="col-md-2"><p>评论数:</p></div>
+					   <div class="col-md-2 soft-text">{{count($video->comments)}}</div>					   
+					</div>
 					<div class="row clearfix margin-top-10">
 					   <div class="col-md-3"><p>发布日期：</p></div>
-					   <div class="col-md-6 soft-text">{{$video->publishTime}}</div>	
+					   <div class="col-md-3 soft-text">{{$video->publishTime}}</div>	
+					   <div class="col-md-3">
+					   	   <button class="btn-primary border-0">
+					   	   	   <i class="icon-th"></i> 管理分组
+					   	   </button>
+					   </div>
 					   <div class="col-md-3">
 					       <button class="btn-danger border-0" onclick="javascript:delete_video(<?php echo $video->id?>)">
 			                   <i class="icon-trash"></i> 删除
 				           </button>
 				       </div>			   
-					</div>
-					<div class="row clearfix margin-top-10">
-					   <div class="col-md-3"><p>点击数:</p></div>
-					   <div class="col-md-3 soft-text">{{$video->view_count}}</div>
-					   <div class="col-md-3"><p>平均分:</p></div>
-					   <div class="col-md-3 soft-text">
-					       <?php if ($video->score_count==0) echo"暂无打分"; else
-					           echo $video->score/$video->score_count;?>
-					   </div>						   
 					</div>
 				</div>
 				<div class="col-md-1">

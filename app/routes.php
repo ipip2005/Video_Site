@@ -26,6 +26,7 @@ Route::post('/register', array('before' =>'guest', function(){
         return Response::json(array('error'=>'been_registered_email'));
     $user = array(
             'username' => Input::get('account'),
+    		'nickname' => Input::get('account'),
             'password' => Hash::make(Input::get('password')),
             'email' => Input::get('email'),
             'privilege' => '4',
@@ -35,6 +36,7 @@ Route::post('/register', array('before' =>'guest', function(){
     DB::table('users')->insert($user);
     return Response::json(array('success'=>'success'));
 }));
+Route::controller('/comment', 'CommentController');
 Route::controller('/video', 'VideoController');
 Route::controller('/user/friends', 'FriendsController');
 Route::controller('/user', 'UserController');

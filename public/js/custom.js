@@ -212,3 +212,6 @@ function cancel_pay_attension(id){
 		}
 	});
 }
+function refresh_comments(vid){
+	$("#blade-comments").load("comment/blade",{'vid': vid});
+}
