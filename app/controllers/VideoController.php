@@ -33,7 +33,7 @@ class VideoController extends \Controller {
 	public function postChangeName() {
 		$name = Input::get ( "name" );
 		$id = Input::get ( "id" );
-		if (Video::find ( $id )->user_id == Auth::id () || Auth::user()->priviledge==0) { // 请求更改的视频是自己的视频才更改，防止篡改
+		if (Video::find ( $id )->user_id == Auth::id () || Auth::user()->privilege==0) { // 请求更改的视频是自己的视频才更改，防止篡改
 			$video = Video::find ( $id );
 			$video->name = $name;
 			$video->save ();
@@ -49,7 +49,7 @@ class VideoController extends \Controller {
 	public function postChangeIntr() {
 		$intr = Input::get ( "intr" );
 		$id = Input::get ( "id" );
-		if (Video::find ( $id )->user_id == Auth::id () || Auth::user()->priviledge==0) { // 请求更改的视频是自己的视频才更改，防止篡改
+		if (Video::find ( $id )->user_id == Auth::id () || Auth::user()->privilege==0) { // 请求更改的视频是自己的视频才更改，防止篡改
 			$video = Video::find ( $id );
 			$video->introduction = $intr;
 			$video->save ();
@@ -90,7 +90,7 @@ class VideoController extends \Controller {
 	 */
 	public function postDelete() {
 		$id = Input::get ( "id" );
-		if (Video::find ( $id )->user_id == Auth::id ()) {
+		if (Video::find ( $id )->user_id == Auth::id () || Auth::user()->privilege==0) {
 			$video = Video::find ( $id );
 			$this->deldir ( "video/" . $video->id );
 			DB::table ( 'videorelation' )->where ( 'video_id', '=', $video->id )->delete ();
@@ -118,6 +118,10 @@ class VideoController extends \Controller {
 	 * 建立一个status=1的视频项
 	 */
 	public function getCreate() {
+		if (Auth::user()->privilege==3) 
+			return Response::json(array(
+					'error' => 'no_permission'
+			));
 		$type = Input::get ( 'file_type' );
 		if ($type != 'flv' && $type != 'ogg' && $type != 'mp4' && $type != 'mov' && $type != 'wmv' && $type != 'mpeg')
 			return Response::json ( array (
@@ -159,6 +163,9 @@ class VideoController extends \Controller {
 				'id'=> $video->id
 		) );
 	}
+	/**
+	 * 制作缩略图和转码
+	 */
 	public function postMake(){
 		$route = 'video/'. Input::get('id');
 		$fileName = Input::get('filename');
@@ -177,6 +184,17 @@ class VideoController extends \Controller {
 			$ret [$group->group_id] = '1';
 		}
 		return Response::json($ret);
+	}
+	/**
+	 * 管理员推荐一个视频上首页
+	 */
+	public function getRecommend(){
+		if (Auth::user()->privilege>0) return Response::json(array('error'=>'no_permission'));
+		$vid = Input::get('vid');
+		$video = Video::find($vid);
+		$video->system_recommend = date ( "Y-m-d H:i:s", time () );
+		$video->save();
+		return Response::json(array('success'=>'1'));
 	}
 	/**
 	 * 更新视频的分组情况

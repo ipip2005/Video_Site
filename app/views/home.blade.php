@@ -34,7 +34,53 @@
 	</div>
 	<script>$('.carousel').carousel();</script>
 </div>
-
+<div class="row">
+	<div class="belt">
+		<h3>
+			<b class="soft-text"><i class="icon-desktop"></i>系统推荐</b>
+		</h3>
+	</div>
+</div>
+<div class="row">
+	@if (count($recommend_videos)>0)
+	<div class="col-xs-4">
+		<a href="/watch?vid=<?php echo $recommend_videos[0]->id?>" class="row"> <img
+			src="/video/<?php echo $recommend_videos[0]->id?>/_thumb.jpg"
+			style="width: 100%; height: auto;" />
+		</a>
+		<div class="row text-center">
+			<p class="soft-text">{{$recommend_videos[0]->name}}</p>
+		</div>
+		<div class="row text-center">
+			<p class="soft-text">播放量：{{$recommend_videos[0]->view_count}}</p>
+		</div>
+	</div>
+	
+	@for($i = 1; $i <= 4; $i++)
+	<div class="col-xs-2">
+		<div class="row margin-tb-0 text-center">
+			@if(($j = $i*2-1) < count($recommend_videos)) <a
+				href="/watch?vid=<?php echo $recommend_videos[$j]->id?>" class="row"> <img
+				src="/video/<?php echo $recommend_videos[$j]->id?>/_thumb.jpg"
+				style="width: 95%; height: auto;" />
+				
+			</a>
+		    <span class="margin-tb-0 soft-text">{{$recommend_videos[$j]->name}}</span>
+			@endif
+		</div>
+		<div class="row margin-tb-0 text-center">
+			@if(($j = $i*2) < count($recommend_videos)) <a
+				href="/watch?vid=<?php echo $recommend_videos[$j]->id?>" class="row"> <img
+				src="/video/<?php echo $recommend_videos[$j]->id?>/_thumb.jpg"
+				style="width: 95%; height: auto;" />
+			</a>
+			 <span class="margin-tb-0 soft-text">{{$recommend_videos[$j]->name}}</span>
+			@endif
+		</div>
+	</div>
+	@endfor
+	@endif
+</div>
 <div class="row">
 	<div class="belt">
 		<h3>
@@ -82,3 +128,4 @@
 	@endfor
 	@endif
 </div>
+

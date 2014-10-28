@@ -84,6 +84,7 @@ class UserController extends BaseController {
         $this->layout->main=View::make('user/settings')->with(compact('user'));
     }
     public function getPanel(){
+    	if (Auth::user()->privilege>0) return Response::json(array('error'=>'no_permission'));
     	$user = Auth::user();
         $active = 'panel';
         $this->layout->title="My Home-Dashboard";
@@ -99,5 +100,12 @@ class UserController extends BaseController {
         $user->introduction = Input::get('introduction');
         $user->save();
         return Response::json(array('success'=>'1'));
+    }
+    public function postModifyPrivilege(){
+    	if (Auth::user()->privilege>0) return Response::json(array('error'=>'no_permission'));
+    	$user = User::find(Input::get('uid'));
+    	$user->privilege = Input::get('privilege');
+    	$user->save();
+    	return Response::json(array('success'=>'1'));
     }
 }

@@ -35,8 +35,9 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest())
+	if (Auth::guest() || Auth::user()->privilege==2)
 	{
+		Auth::logout();
 		if (Request::ajax())
 		{
 			return Response::make('Unauthorized', 401);

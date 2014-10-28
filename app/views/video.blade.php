@@ -15,20 +15,15 @@
 			</div>	
 		</div>
 		<div class="col-md-4">
-			<div><p>简介：</p><p class="soft-text intr-text">{{$video->introduction}}</p></div>
-			<br/>
-			<br/>
-			<div>上传者: <a href="/user?uid=<?php echo $video->user_id?>"><?php $user = User::find($video->user_id);
-			     if (empty($user->nickname))echo $user->username; else echo $user->nickname?></a></div>
-			<br/>
-			<br/>
-			<div>点击量：{{$video->view_count}}</div>
-			<br/>
-			<br/>
-			<div>☆☆☆☆☆</div>
-			<br/>
-			<br/>
-			<div><button class="btn btn-primary">分享</button></div>
+			<div class="row"><p>简介：</p><p class="soft-text intr-text">{{$video->introduction}}</p></div>
+			<div class="row"><p>上传者: <a href="/user?uid=<?php echo $video->user_id?>"><?php $user = User::find($video->user_id);
+			     if (empty($user->nickname))echo $user->username; else echo $user->nickname?></a></p></div>
+			<div class="row"><p>点击量：{{$video->view_count}}</p></div>
+			<div class="row"><p>☆☆☆☆</p></div>
+			<div class="row"><button class="btn btn-primary">分享</button></div>
+			@if (Auth::user()->privilege==0)
+			<div class="row"><button class="btn btn-danger" onclick="recommend(<?php echo $video->id?>)">推荐</button></div>
+			@endif
 		</div>
 	</div>
 	<div class="row">
@@ -68,7 +63,7 @@
 						reply_to=0;
 						$("#comment-input input").val("");
 						$("#comment-input span").html("@");    	
-			    	} else alert("评论失败，请重试");
+			    	} else alert("评论失败，请重试,你可能被管理员封禁");
 		    	},error:function(XMLHttpRequest){
 			    	if (XMLHttpRequest.status=="401"){
 			    		$("#login").get(0).click();

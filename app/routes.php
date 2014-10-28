@@ -15,9 +15,14 @@ Route::post('/login', array('before' => 'guest', function(){
         'username' => Input::get('account'),
         'password' => Input::get('password')
     ];
-    if (Auth::attempt($credentials))
-        return Response::json(array('response'=>'ok'));else
-            return Response::json(array('response' => 'Unauthorized'));
+    if (Auth::attempt($credentials)){
+    	if (Auth::user()->privilege=="2") {
+    		Auth::logout();
+    		return Response::json(array('response'=>'no_permission'));
+    	} 
+        return Response::json(array('response'=>'ok'));
+    }else
+        return Response::json(array('response' => 'Unauthorized'));
 }));
 Route::post('/register', array('before' =>'guest', function(){
     if(User::where('username','=',Input::get('account'))->count()>0) 

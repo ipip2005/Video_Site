@@ -131,6 +131,14 @@ r.on('fileAdded', function(file, event){
 				$(".up-hide").hide();
 			    $("#browseButton").show();
 			    return;
+			} else
+			if (response.error=="no_permission")
+			{
+				error_message("你的发布视频权限被封禁，请联系管理员");
+				r.cancel();
+				$(".up-hide").hide();
+			    $("#browseButton").show();
+			    return;
 			}
 			if (response.success=="new" || response.success=="continue")
 				r.upload();
@@ -221,7 +229,7 @@ r.on('cancel', function(){
 		</div>
 	</div>
 </div>
-@include('blades/grouping_dialog');
+@include('blades/grouping_dialog')
 <script>
 var vid = 1;
 function manage_group(id){

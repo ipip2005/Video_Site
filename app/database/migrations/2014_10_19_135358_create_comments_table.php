@@ -13,6 +13,7 @@ class CreateCommentsTable extends Migration {
 	public function up()
 	{
 		Schema::create('comments', function (Blueprint $table) {
+			$table->increments('id');
 			$table->unsignedInteger('user_id');
 			$table->unsignedInteger('tid'); //被回复的用户id，为0表示对视频评论
 			$table->unsignedInteger('video_id');

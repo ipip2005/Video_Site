@@ -23,8 +23,10 @@ function login(){
 	$.ajax({ url:"/login", async:"false", type:"POST", data:{"account":account,"password":password},
 		success:function(response){
 			var res = response.response;
-			if (res=="ok")history.go(0); else{
-				error_message("登陆失败");
+			if (res=="ok") location=location; else{
+				if (response.response=="")
+					error_message("登陆失败"); else
+					error_message(response.response);
 			}
 		},
 	});
@@ -214,7 +216,8 @@ function cancel_pay_attension(id){
 	});
 }
 function refresh_comments(vid){
-	$("#blade-comments").load("comment/blade",{'vid': vid});
+	$("#tab-comments").load("/comment/blade",{'vid': vid});
+	$("#blade-comments").load("/comment/blade",{'vid': vid});
 }
 
 function switch_button(bid){
@@ -238,4 +241,35 @@ function add_reply(uid, name){
 	reply_to = uid;
 	$("#comment-input span").html("@"+name);
 	return;
+}
+function recommend(vid){
+	$.ajax({url:"/video/recommend",type:"get",data:{'vid':vid},success:function(){
+		alert('推荐成功');
+	}})
+}
+function delete_comment(cid){
+	$.ajax({url:"/comment/delete",type:"get",data:{'cid':cid},success:function(res){
+		if (res.success=="1") $("#comment-"+cid).hide(500,function(){refresh_comments(0);});
+	}})
+}
+function change_privilege(uid, privilege){
+    domid = "#dropdown-"+uid;
+    $.ajax({url:"/user/modify-privilege",type:"post",async:false,data:{'uid':uid,'privilege':privilege},
+    	success:function(res){
+    		if (res.error=="undefined") {
+    			alert(res.error);
+    			return;
+    		}
+    		$(domid).removeClass("privilege-1").removeClass("privilege-2")
+    			.removeClass("privilege-3").removeClass("privilege-4").addClass('privilege-'+privilege);
+    		var str = "管理员";
+    		switch (privilege){
+    		case 1: str="禁止发言";break;
+    		case 2: str="禁止登陆";break;
+    		case 3: str="禁止发布";break;
+    		case 4: str="普通用户";break;
+    		}
+    		$(domid+" button .privilege").html(str);
+    		
+    	}});
 }

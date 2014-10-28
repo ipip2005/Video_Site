@@ -13,6 +13,7 @@ class CommentController extends \Controller
      * 添加一条评论
      */
     public function postAddComment(){
+    	if (Auth::user()->privilege==1) return Response::json(array('error'=>'no_permission'));
     	$uid = Auth::id();
     	$tid = Input::get('tid');
     	$vid = Input::get('vid');
@@ -33,7 +34,18 @@ class CommentController extends \Controller
      */
     public function postBlade(){
     	$vid = Input::get('vid');
-    	$comments = Video::find($vid)->comments()->orderBy('created_at','desc')->get();
+    	if ($vid==0)
+    		$comments = Comment::orderBy('created_at','desc')->get();
+    	else
+    		$comments = Video::find($vid)->comments()->orderBy('created_at','desc')->get();
     	return View::make('blades/comments')->with(compact('comments'));
+    }
+    /**
+     * 删除一条评论
+     */
+    public function getDelete(){
+    	$cid = Input::get('cid');
+    	Comment::find($cid)->delete();
+    	return Response::json(array('success'=>'1'));
     }
 }

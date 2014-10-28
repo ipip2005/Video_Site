@@ -13,6 +13,7 @@ class User2TableSeeder extends Seeder
             'nickName' => 'Tom Cruise',
             'password' => Hash::make('tom'),
         	'email' => 'tom@126.com',
+        	'privilege' => '1',
             'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()'),
         );
@@ -25,6 +26,7 @@ class User2TableSeeder extends Seeder
             'nickName' => 'Jackie Chan',
             'password' => Hash::make('jack'),
         	'email' => 'jack@126.com',
+		    'privilege' => '2',
             'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()'),
         );
@@ -36,6 +38,7 @@ class User2TableSeeder extends Seeder
             'username' => 'mary',
             'nickName' => 'Mary Streep',
             'password' => Hash::make('mary'),
+			'privilege' => '3',
         	'email' => 'mary@126.com',
             'created_at' => DB::raw('NOW()'),
             'updated_at' => DB::raw('NOW()'),

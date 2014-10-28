@@ -180,6 +180,10 @@ a:hover{
 	width:60%;
 	height:auto;
 }
+.user img{
+	width:60%;
+	height:auto;
+}
 .inline{
 	display:inline;
 }
@@ -210,4 +214,17 @@ a:hover{
 .error-line p{
 	line-height:50px;
 	font-size:25px;
+}
+.privilege-1 button{
+	background-color:#e4b9b9;
+}
+.privilege-2 button{
+	background-color:#eea9a9;
+}
+.privilege-3 button{
+	background-color:#e4b9b9;
+}
+.privilege-4 button{
+	color: #fff;
+    background-color: #428bca;
 }
