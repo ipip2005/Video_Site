@@ -267,6 +267,7 @@ class VideoController extends \Controller {
 				// create the temporary directory
 				if (! is_dir ( $temp_dir ) && !file_exists($temp_dir)) {
 					mkdir ( $temp_dir, 0777, true );
+					chmod ( $temp_dir, 0777);
 				}
 				// move the temporary file
 				$tmp_name = $file ['tmp_name'];
@@ -354,8 +355,12 @@ class VideoController extends \Controller {
 			foreach ( Video::where ( 'user_id', '=', Auth::id () )->where ( 'status', '<>', '0' )->get () as $video ) {
 				$vid = $video->id;
 			}
-			if (!file_exists('video'))mkdir ( 'video' , 0777, true);
+			if (!file_exists('video')){
+			    mkdir ( 'video' , 0777, true);
+			    chmod ( 'video' , 0777);
+			}
 			mkdir ( 'video/' . $vid , 0777, true );
+			chmod ( 'video/' . $vid , 0777);
 			$route = 'video/' . $vid;
 			// create the final destination file
 			if (($fp = fopen ( $route . '/' . $fileName, 'w' )) !== false) {
