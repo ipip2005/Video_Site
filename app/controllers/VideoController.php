@@ -354,8 +354,8 @@ class VideoController extends \Controller {
 			foreach ( Video::where ( 'user_id', '=', Auth::id () )->where ( 'status', '<>', '0' )->get () as $video ) {
 				$vid = $video->id;
 			}
-			if (!file_exists('video'))mkdir ( 'video' );
-			mkdir ( 'video/' . $vid );
+			if (!file_exists('video'))mkdir ( 'video' , 0777, true);
+			mkdir ( 'video/' . $vid , 0777, true );
 			$route = 'video/' . $vid;
 			// create the final destination file
 			if (($fp = fopen ( $route . '/' . $fileName, 'w' )) !== false) {
