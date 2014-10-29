@@ -21,7 +21,7 @@
 			<div class="row"><p>点击量：{{$video->view_count}}</p></div>
 			<div class="row"><p>☆☆☆☆</p></div>
 			<div class="row"><button class="btn btn-primary">分享</button></div>
-			@if (Auth::user()->privilege==0)
+			@if (Auth::check() && Auth::user()->privilege==0)
 			<div class="row"><button class="btn btn-danger" onclick="recommend(<?php echo $video->id?>)">推荐</button></div>
 			@endif
 		</div>

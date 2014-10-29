@@ -123,7 +123,9 @@ class VideoController extends \Controller {
 					'error' => 'no_permission'
 			));
 		$type = Input::get ( 'file_type' );
-		if ($type != 'flv' && $type != 'ogg' && $type != 'mp4' && $type != 'mov' && $type != 'wmv' && $type != 'mpeg')
+		if ($type != 'flv' && $type != 'ogg' && $type != 'mp4' && 
+		    $type != 'mov' && $type != 'wmv' && $type != 'mpeg'&&
+		    $type != 'f4v')
 			return Response::json ( array (
 					'error' => 'not supported type' 
 			) );
@@ -167,8 +169,11 @@ class VideoController extends \Controller {
 	 * 制作缩略图和转码
 	 */
 	public function postMake(){
+	    //ignore_user_abort(true);
 		$route = 'video/'. Input::get('id');
-		$fileName = Input::get('filename');
+		if (file_exists($route.'/video.flv')) 
+		    return Response::json(array('error'=>'translated'));
+		$fileName = 'tmp';//Input::get('filename');
 		$this->createThumbnail ( $route, $fileName );
 		$this->translate ( $route, $fileName );
 		return Response::json(array('success'=>'1'));
@@ -260,7 +265,7 @@ class VideoController extends \Controller {
 				$temp_dir = 'temp/' . $_POST ['resumableIdentifier'];
 				$dest_file = $temp_dir . '/' . $_POST ['resumableFilename'] . '.part' . $_POST ['resumableChunkNumber'];
 				// create the temporary directory
-				if (! is_dir ( $temp_dir )) {
+				if (! is_dir ( $temp_dir ) && !file_exists($temp_dir)) {
 					mkdir ( $temp_dir, 0777, true );
 				}
 				// move the temporary file
@@ -359,6 +364,7 @@ class VideoController extends \Controller {
 					$this->_log ( 'writing chunk ' . $i );
 				}
 				fclose ( $fp );
+				rename($route.'/'.$fileName, $route.'/tmp');
 				Video::where ( 'user_id', '=', Auth::id () )->where ( 'status', '=', '1' )->update ( array (
 						'status' => '2',
 						'path' => $route . '/video.flv' 
@@ -382,7 +388,8 @@ class VideoController extends \Controller {
 		$file = $route . '/' . $filename;
 		$ffmpeg_cmd = "ffmpeg -i \"" . $file . "\" -y -ab 32 -ar 22050 -b 800000 " . $route . '/video.flv';
 		$this->_log ( $ffmpeg_cmd );
-	    pclose(popen ( $ffmpeg_cmd, "r" ));
+	    shell_exec ( $ffmpeg_cmd);
+	    unlink($file);
 	}
 	public function createThumbnail($route, $fileName) {
 		$file = $route . '/' . $fileName;
@@ -390,6 +397,6 @@ class VideoController extends \Controller {
 		$thumbName = $route . '/' . "_thumb.jpg";
 		$ffmpeg_cmd = "ffmpeg -i \"" . $file . "\" -y -f image2 -ss 1.01 -t " . $time . " -s 320*240 " . $thumbName;
 		$this->_log ( $ffmpeg_cmd );
-		pclose(popen ( $ffmpeg_cmd, "r" ));
+		shell_exec ( $ffmpeg_cmd);
 	}
 }

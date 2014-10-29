@@ -39,50 +39,7 @@
 				</div>
 			</div>
 			<!--已分享Image-->
-			<div class="row clearfix ">
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-			</div>
-			<div class="row clearfix">
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-			</div>
+			
 			<!--系统推荐Title-->
 			<div class="row clearfix margin-tb-10">
 				<div class="col-xs-12">
@@ -92,28 +49,6 @@
 				</div>
 			</div>
 			<!--系统推荐Image-->
-			<div class="row clearfix">
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-				<div class="col-xs-3">
-					<img src="*.jpg" style="width: 100%; height: auto;" />
-					<div>Wild China</div>
-					<div>播放量：14万</div>
-				</div>
-			</div>
 			<div class="row">
 				<div class="col-xs-12 divider img-rounded"></div>
 			</div>
