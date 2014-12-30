@@ -273,3 +273,27 @@ function change_privilege(uid, privilege){
     		
     	}});
 }
+function rate(rating, vid){
+	$.ajax({url:"/video/rating",type:"post",async:false,data:{'score': rating,'vid': vid},
+    	success:function(res){
+    		if (res.success == "1"){
+    			$(".rating-blade").load("/video/rating-blade",{"vid": vid});
+    			$("#rating-success").show(500).delay(1000).hide(500);
+    		} else {
+    			alert("未登录或未知错误！！");
+    		}
+    	}});
+}
+function share(vid){
+	$.ajax({url:"/video/share",type:"post",async:false,data:{'vid': vid},
+    	success:function(res){
+    		if (res.error == 'already shared'){
+    			alert("不能重复分享...");
+    		}
+    		if (res.success == "1"){
+    			alert("分享成功！！！");
+    		} else {
+    			alert("未登录或未知错误！！");
+    		}
+    	}});
+}

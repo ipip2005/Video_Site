@@ -190,7 +190,7 @@
 	   <div class="main-wrap">
 		  <div class="container-fluid">{{$main}}</div>
 	   </div>
-	   <footer class="footer text-center"> This_is_Footer </footer>
+	   <footer class="footer text-center"> FDU VIDEO BY  YLL LYB ZX ZYS CKL</footer>
 	</div>
 	{{ HTML::script('./js/custom.js') }}
 </body>

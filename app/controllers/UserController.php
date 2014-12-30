@@ -25,20 +25,39 @@ class UserController extends BaseController {
         $name = $user->nickname;
         $videos = Video::where('user_id','=',$user->id)->orderBy('publishTime','desc')
         ->take(9)->get();
+        $shared_video_relations = DB::table("share")->where('uid','=',$user->id)->get();
+        $shared_videos = new Collection();
+        foreach($shared_video_relations as $vrelation){
+            $shared_videos->add(Video::find($vrelation->vid));
+        }
+        $recommend_videos = Video::where('status', '=', 0)->where('system_recommend', '<>', '0000-00-00 00:00:00')
+        ->orderBy('system_recommend', 'desc')
+        ->take(12)
+        ->get();
         if (empty($name)) $name = $user->username;
         $this->layout->title=$name."\'s home";
-        $this->layout->main=View::make('user/ihome')->with(compact('user','name','videos'));
+        $this->layout->main=View::make('user/ihome')->with(compact('user','name','videos','shared_videos','recommend_videos'));
     }
     public function getIhome(){
         $user = Auth::user();
         $name = $user->nickname;
         $videos = Video::where('user_id','=',$user->id)->where('status','=','0')->orderBy('publishTime','desc')
             ->take(9)->get();
+        $shared_video_relations = DB::table("share")->where('uid','=',$user->id)->get();
+        $shared_videos = new Collection();
+        foreach($shared_video_relations as $vrelation){
+            $shared_videos->add(Video::find($vrelation->vid));
+        }
+        $recommend_videos = Video::where('status', '=', 0)->where('system_recommend', '<>', '0000-00-00 00:00:00')
+        ->orderBy('system_recommend', 'desc')
+        ->take(12)
+        ->get();
         $active = 'ihome';
         if (empty($name)) $name = $user->username;
         $this->layout->title="My Home";
         $this->layout->user_nav=View::make('user/index')->with(compact('active'));
-        $this->layout->main=View::make('user/ihome')->with(compact('user','name','videos'));
+        $this->layout->main=View::make('user/ihome')->
+        with(compact('user','name','videos','shared_videos','recommend_videos'));
     }
     public function getPodcast(){
         $user = Auth::user();

@@ -26,7 +26,6 @@ html, body{
 	height:45px;
 	width:100%;
 	background-color:#222;
-	
 }
 .master-nav-content{
 	text-align:center;
@@ -151,6 +150,14 @@ html, body{
 	color:#17a689;
 	font-family: 'Open  Sans', 'trebuchet ms', arial, sans-serif;
 }
+.fire-text{
+	color:#e0110c;
+	font-family: 'Open Sans', 'trebuchet ms', arial, sans-serif;
+}
+.purple-text{
+	color:purple;
+	font-family: 'Open Sans', 'trebuchet ms', arial, sans-serif;
+}
 .up-hide{
 	margin-top:40px;
 	margin-bottom:20px;
@@ -227,4 +234,45 @@ a:hover{
 .privilege-4 button{
 	color: #fff;
     background-color: #428bca;
+}
+
+.rating{
+	unicode-bidi: bidi-override;
+	direction: rtl;
+	text-align: center;
+	font-size:30px;
+}
+.rating > span{
+	position: relative;
+}
+.rating > span:hover,
+.rating > span:hover ~ span{
+	color: transparent;
+}
+
+.rating > span:hover:before,
+.rating > span:hover ~ span:before{
+	content: "\2605";
+	position: absolute;
+	left: 0;
+	color: gold;
+}
+.red-star{
+	color: red;
+}
+#rating-success{
+	color: red;
+}
+.img-score{
+	position:absolute;
+	bottom:50;
+	right:2px;
+}
+.img-score2{
+	position:absolute;
+	bottom:110;
+	right:2px;
+}
+.rating-sets a{
+	position:relative;
 }

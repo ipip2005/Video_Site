@@ -91,13 +91,7 @@
 						<p>评分:</p>
 					</div>
 					<div class="col-md-2 soft-text">
-					       <?php
-												
-if ($video->score_count == 0)
-													echo "暂无打分";
-												else
-													echo $video->score / $video->score_count;
-												?>
+					       @include("blades/rating_not")
 					   </div>
 					<div class="col-md-2">
 						<p>评论数:</p>

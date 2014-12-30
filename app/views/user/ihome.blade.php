@@ -39,7 +39,24 @@
 				</div>
 			</div>
 			<!--已分享Image-->
-			
+			<div class="row clearfix">
+			    @if(count($shared_videos)==0)
+			    <div class="col-xs-12 text-center">
+			        <h4 class="soft-text">{{$pre}}未发布过视频</h4>
+			    </div>
+			    @endif
+			    @foreach($shared_videos as $video)
+				<div class="col-xs-4">
+					<a href="/watch?vid=<?php echo $video->id?>" class="row ">
+					   <img src="/video/<?php echo $video->id?>/_thumb.jpg" style="width: 100%; height: auto;"/>
+					</a>
+					<div class="row text-center margin-tb-0"><p class="soft-text margin-tb-0">{{$video->name}}</p></div>
+					<div class="row text-center margin-tb-0">
+						<span class="soft-text margin-tb-0">播放量:{{$video->view_count}}</span>
+						<span class="soft-text margin-tb-0">&nbsp&nbsp评论:{{count($video->comments)}}条</span></div>
+				</div>
+				@endforeach
+			</div>
 			<!--系统推荐Title-->
 			<div class="row clearfix margin-tb-10">
 				<div class="col-xs-12">
@@ -49,6 +66,24 @@
 				</div>
 			</div>
 			<!--系统推荐Image-->
+			<div class="row clearfix">
+			    @if(count($recommend_videos)==0)
+			    <div class="col-xs-12 text-center">
+			        <h4 class="soft-text">{{$pre}}未发布过视频</h4>
+			    </div>
+			    @endif
+			    @foreach($recommend_videos as $video)
+				<div class="col-xs-4">
+					<a href="/watch?vid=<?php echo $video->id?>" class="row ">
+					   <img src="/video/<?php echo $video->id?>/_thumb.jpg" style="width: 100%; height: auto;"/>
+					</a>
+					<div class="row text-center margin-tb-0"><p class="soft-text margin-tb-0">{{$video->name}}</p></div>
+					<div class="row text-center margin-tb-0">
+						<span class="soft-text margin-tb-0">播放量:{{$video->view_count}}</span>
+						<span class="soft-text margin-tb-0">&nbsp&nbsp评论:{{count($video->comments)}}条</span></div>
+				</div>
+				@endforeach
+			</div>
 			<div class="row">
 				<div class="col-xs-12 divider img-rounded"></div>
 			</div>
