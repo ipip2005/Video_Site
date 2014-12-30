@@ -23,7 +23,7 @@
 								echo User::find ( $uid )->nickname?> <i class="icon-comment"></i></span>
 						</div>
 						<div class="at-right">
-							@if(Auth::user()->privilege==0)
+							@if(Auth::check() && Auth::user()->privilege==0)
 							<button class="btn-danger"
 								onclick="delete_comment(<?php echo $comment->id?>)">删除</button>
 							@endif <span class="soft-text">{{$comment->created_at}}</span>
